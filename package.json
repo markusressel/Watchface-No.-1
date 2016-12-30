@@ -1,0 +1,28 @@
+{
+    "author": "Markus Ressel",
+    "dependencies": {},
+    "keywords": [],
+    "name": "watchface-no.1",
+    "pebble": {
+        "capabilities": [
+            "health"
+        ],
+        "displayName": "Watchface no.1",
+        "enableMultiJS": true,
+        "messageKeys": [],
+        "projectType": "native",
+        "resources": {
+            "media": []
+        },
+        "sdkVersion": "3",
+        "targetPlatforms": [
+            "aplite",
+            "diorite"
+        ],
+        "uuid": "21820efd-3b41-4142-921c-372cadbaffe2",
+        "watchapp": {
+            "watchface": true
+        }
+    },
+    "version": "1.0.0"
+}
