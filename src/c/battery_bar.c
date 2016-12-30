@@ -32,7 +32,7 @@ static void battery_update_proc(Layer *layer, GContext *ctx) {
   // Draw the bar inside
   int insetX = 2;
   int insetY = 2;
-  int fillWidth = (s_battery_level * (layer_width - insetY - poleWidth)) / 100;
+  int fillWidth = (s_battery_level * (layer_width - insetY * 2 - poleWidth)) / 100;
   graphics_context_set_fill_color(ctx, foregroundColor);
   graphics_fill_rect(ctx, GRect(insetX, insetY, fillWidth, bounds.size.h - insetX * 2), 0, GCornerNone);
 }
