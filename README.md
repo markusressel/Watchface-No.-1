@@ -1,6 +1,8 @@
 # Watchface No. 1
 A simple, modular watchface for the Pebble platform.
 
+<img src="/screenshot.jpg" width="400">
+
 # Content
 The watchface currently contains the following layers:
 * Time
