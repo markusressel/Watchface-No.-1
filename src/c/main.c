@@ -5,6 +5,7 @@
 #include "battery_text.h"
 #include "tickListener.h"
 #include "batteryListener.h"
+#include "phone_connection_indicator.h"
 #include "theme.h"
 
 // Main Window
@@ -17,6 +18,7 @@ static void main_window_load(Window *window) {
   create_date_layer(window);
   create_battery_bar_layer(window);
   create_battery_text_layer(window);
+  create_phone_connection_indicator_layer(window);
   
   // Register for tick events (time)
   register_tick_listener();
@@ -33,6 +35,7 @@ static void main_window_unload(Window *window) {
   unregister_battery_listener();
   
   // destroy layers
+  destroy_phone_connection_indicator_layer();
   destroy_battery_text_layer();
   destroy_battery_bar_layer();
   destroy_date_layer();

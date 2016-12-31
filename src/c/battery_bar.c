@@ -29,12 +29,28 @@ static void battery_update_proc(Layer *layer, GContext *ctx) {
   graphics_context_set_fill_color(ctx, foregroundColor);
   graphics_fill_rect(ctx, batteryPole, 0, GCornerNone);
 
-  // Draw the bar inside
   int insetX = 2;
   int insetY = 2;
-  int fillWidth = (s_battery_level * (layer_width - insetY * 2 - poleWidth)) / 100;
-  graphics_context_set_fill_color(ctx, foregroundColor);
-  graphics_fill_rect(ctx, GRect(insetX, insetY, fillWidth, bounds.size.h - insetX * 2), 0, GCornerNone);
+  if (s_battery_cable_connected) {
+    // Draw cable
+    graphics_context_set_stroke_width(ctx, 1);
+    graphics_draw_line(ctx, GPoint(0 ,bounds.size.h / 2), GPoint(bounds.size.w ,bounds.size.h / 2));
+    
+    // Draw the bar inside
+    if (s_battery_charging) {
+      // TODO: charging animation
+    } else {
+      // Fill it completely
+      int fillWidth = layer_width - insetY * 2 - poleWidth;
+      graphics_context_set_fill_color(ctx, foregroundColor);
+      graphics_fill_rect(ctx, GRect(insetX, insetY, fillWidth, bounds.size.h - insetX * 2), 0, GCornerNone);
+    }
+  } else {
+    // Draw the bar inside
+    int fillWidth = (s_battery_level * (layer_width - insetY * 2 - poleWidth)) / 100;
+    graphics_context_set_fill_color(ctx, foregroundColor);
+    graphics_fill_rect(ctx, GRect(insetX, insetY, fillWidth, bounds.size.h - insetX * 2), 0, GCornerNone);
+  }
 }
 
 void update_battery_bar(){

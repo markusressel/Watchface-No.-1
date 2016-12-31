@@ -10,6 +10,8 @@ static bool registered = false;
 static void battery_callback(BatteryChargeState state) {
   // Record the new battery level
   s_battery_level = state.charge_percent;
+  s_battery_charging = state.is_charging;
+  s_battery_cable_connected = state.is_plugged;
   
   APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery changed: %d", (int) s_battery_level);
   
