@@ -7,7 +7,7 @@ static Layer *s_phone_connection_indicator_layer;
 
 static bool is_phone_app_connected;
 
-static ConnectionHandler connectionHandler = NULL;
+// static ConnectionHandler connectionHandler = connection_change;
 
 static void connection_changed(bool connected) {
   is_phone_app_connected = connected;
@@ -51,7 +51,7 @@ void create_phone_connection_indicator_layer(Window *window) {
   layer_set_update_proc(s_phone_connection_indicator_layer, phone_connection_indicator_update_proc);  
   
   connection_service_subscribe((ConnectionHandlers) {
-    .pebble_app_connection_handler = connectionHandler
+    .pebble_app_connection_handler = connection_changed
   });
   // force update
   update_phone_connection_indicator();
