@@ -3,9 +3,10 @@
 #include "date.h"
 #include "battery_bar.h"
 #include "battery_text.h"
-#include "tickListener.h"
-#include "batteryListener.h"
+#include "tick_listener.h"
+#include "battery_listener.h"
 #include "phone_connection_indicator.h"
+#include "system_event_listener.h"
 #include "theme.h"
 
 // Main Window
@@ -26,6 +27,8 @@ static void main_window_load(Window *window) {
   register_battery_listener();
   // Ensure battery level is displayed from the start
   force_battery_update();
+  // Register system event handler
+  register_system_event_listener();
 }
 
 // destroys all components of the main window
@@ -33,6 +36,7 @@ static void main_window_unload(Window *window) {
   // unregister listeners
   unregister_tick_listener();
   unregister_battery_listener();
+  unregister_system_event_listener();
   
   // destroy layers
   destroy_phone_connection_indicator_layer();

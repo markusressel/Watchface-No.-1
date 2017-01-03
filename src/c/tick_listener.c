@@ -1,5 +1,5 @@
 #include <pebble.h>
-#include "tickListener.h"
+#include "tick_listener.h"
 #include "time.h"
 #include "date.h"
 

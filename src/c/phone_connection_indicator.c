@@ -1,19 +1,10 @@
 #include <pebble.h>
 #include "phone_connection_indicator.h"
+#include "system_event_listener.h"
 #include "theme.h"
 
 // phone connection indicator layer
 static Layer *s_phone_connection_indicator_layer;
-
-static bool is_phone_app_connected;
-
-// static ConnectionHandler connectionHandler = connection_change;
-
-static void connection_changed(bool connected) {
-  is_phone_app_connected = connected;
-  
-  update_phone_connection_indicator();
-}
 
 static void phone_connection_indicator_update_proc(Layer *layer, GContext *ctx) {
   GRect bounds = layer_get_bounds(layer);
@@ -50,9 +41,6 @@ void create_phone_connection_indicator_layer(Window *window) {
   s_phone_connection_indicator_layer = layer_create(layer_bounds);
   layer_set_update_proc(s_phone_connection_indicator_layer, phone_connection_indicator_update_proc);  
   
-  connection_service_subscribe((ConnectionHandlers) {
-    .pebble_app_connection_handler = connection_changed
-  });
   // force update
   update_phone_connection_indicator();
   
@@ -62,7 +50,5 @@ void create_phone_connection_indicator_layer(Window *window) {
 
 // destroy the layer
 void destroy_phone_connection_indicator_layer() {
-  connection_service_unsubscribe();
-  
   layer_destroy(s_phone_connection_indicator_layer);
 }

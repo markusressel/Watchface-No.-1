@@ -1,7 +1,7 @@
 #include <pebble.h>
 #define EXTERN
 #include "battery.h"
-#include "batteryListener.h"
+#include "battery_listener.h"
 #include "battery_bar.h"
 #include "battery_text.h"
 

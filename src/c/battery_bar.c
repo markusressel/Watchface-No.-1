@@ -1,7 +1,7 @@
 #include "battery_bar.h"
 #include "battery.h"
 #include "theme.h"
-#include "batteryListener.h"
+#include "battery_listener.h"
 
 // battery bar layer
 static Layer *s_battery_bar_layer;

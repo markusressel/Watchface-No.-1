@@ -1,7 +1,7 @@
 #include <pebble.h>
 #include "date.h"
 #include "theme.h"
-#include "tickListener.h"
+#include "tick_listener.h"
 
 // Date TextLayer
 static TextLayer *s_date_layer;

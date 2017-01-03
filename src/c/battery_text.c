@@ -1,7 +1,7 @@
 #include "battery_text.h"
 #include "battery.h"
 #include "theme.h"
-#include "batteryListener.h"
+#include "battery_listener.h"
 
 // battery text layer
 static TextLayer *s_battery_text_layer;
