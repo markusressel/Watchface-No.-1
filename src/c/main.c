@@ -7,6 +7,7 @@
 #include "battery_listener.h"
 #include "phone_connection_indicator.h"
 #include "system_event_listener.h"
+#include "weather.h"
 #include "theme.h"
 
 // Main Window
@@ -20,6 +21,7 @@ static void main_window_load(Window *window) {
   create_battery_bar_layer(window);
   create_battery_text_layer(window);
   create_phone_connection_indicator_layer(window);
+  create_weather_layer(window);
   
   // Register for tick events (time)
   register_tick_listener();
@@ -39,6 +41,7 @@ static void main_window_unload(Window *window) {
   unregister_system_event_listener();
   
   // destroy layers
+  destroy_weather_layer();
   destroy_phone_connection_indicator_layer();
   destroy_battery_text_layer();
   destroy_battery_bar_layer();
@@ -49,7 +52,7 @@ static void main_window_unload(Window *window) {
 // initializes the watchface
 static void init() {
   // set theme
-  enum Theme theme = DARK;
+  enum Theme theme = LIGHT;
   init_theme(theme);
   
   // Create main Window element and assign to pointer

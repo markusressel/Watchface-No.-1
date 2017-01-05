@@ -1,7 +1,6 @@
 #include <pebble.h>
 #include "date.h"
 #include "theme.h"
-#include "tick_listener.h"
 
 // Date TextLayer
 static TextLayer *s_date_layer;
@@ -22,23 +21,16 @@ void update_date() {
   text_layer_set_text(s_date_layer, s_buffer);
 }
 
-// Method to react to tickHandler events (time changes)
-static void time_tick_handler(struct tm *tick_time, TimeUnits units_changed) {
-  update_date();
-}
-
 // creates the date layer
 void create_date_layer(Window *window) {
-  register_tick_listener();
-  
   // Get information about the Window
   Layer *window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_unobstructed_bounds(window_layer);
+  GRect bounds = layer_get_bounds(window_layer);
   
   int width = bounds.size.w;
-  int height = 50;
+  int height = 35;
   int offsetX = (bounds.size.w - width) / 2;
-  int offsetY = (bounds.size.h / 2) - (height / 2) - 22;
+  int offsetY = (bounds.size.h / 2) - 55;
   
   GRect layer_bounds = GRect(offsetX, offsetY, width, height);
   
@@ -46,7 +38,7 @@ void create_date_layer(Window *window) {
   s_date_layer = text_layer_create(layer_bounds);
   
   // Improve the layout to be more like a watchface
-  text_layer_set_background_color(s_date_layer, GColorClear);
+  text_layer_set_background_color(s_date_layer, backgroundColor);
   text_layer_set_text_color(s_date_layer, textColor);
   text_layer_set_font(s_date_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD));
   text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
@@ -59,7 +51,5 @@ void create_date_layer(Window *window) {
 
 // destroys the date layer
 void destroy_date_layer() {
-  unregister_tick_listener();
-  
   text_layer_destroy(s_date_layer);
 }

@@ -21,14 +21,20 @@ static void battery_callback(BatteryChargeState state) {
 
 void register_battery_listener() {
   if (registered) {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "ignoring register battery listener");
     return;
   }
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "registering battery listener");
+  
   battery_state_service_subscribe(battery_callback);
   registered = true;
 }
 
 void unregister_battery_listener() {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "unregistering battery listener");
+  
   battery_state_service_unsubscribe();
+  registered = false;
 }
 
 void force_battery_update() {

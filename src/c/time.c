@@ -11,10 +11,10 @@ void update_time() {
   struct tm *tick_time = localtime(&temp);
 
   // Write the current hours and minutes into a buffer
-  static char s_buffer[8];
+  static char s_buffer[16];
   strftime(s_buffer, 
            sizeof(s_buffer),
-           clock_is_24h_style() ? "%H:%M" : "%I:%M",
+           clock_is_24h_style() ? "%H:%M:%S" : "%I:%M:%S",
            tick_time);
 
   // Display this time on the TextLayer
@@ -25,7 +25,7 @@ void update_time() {
 void create_time_layer(Window *window) {
   // Get information about the Window
   Layer *window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_unobstructed_bounds(window_layer);
+  GRect bounds = layer_get_bounds(window_layer);
   
   int width = bounds.size.w;
   int height = 50;
@@ -38,9 +38,9 @@ void create_time_layer(Window *window) {
   s_time_layer = text_layer_create(layer_bounds);
   
   // set styling
-  text_layer_set_background_color(s_time_layer, GColorClear);
+  text_layer_set_background_color(s_time_layer, backgroundColor);
   text_layer_set_text_color(s_time_layer, textColor);
-  text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD));
+  text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_BITHAM_34_MEDIUM_NUMBERS));
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
   
   // update time value before rendering so it is shown right from the beginning

@@ -12,7 +12,7 @@ void init_theme(enum Theme theme) {
     case LIGHT:
     default:
       textColor = GColorBlack;
-      backgroundColor = GColorClear;
+      backgroundColor = GColorWhite;
       foregroundColor = textColor;
       break;
   }

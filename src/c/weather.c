@@ -7,6 +7,12 @@ static TextLayer *s_weather_layer;
 // Weather Font
 static GFont s_weather_font;
 
+// Weather icon
+static GBitmap *s_weather_icon;
+
+// Icon layer
+static BitmapLayer *s_weather_icon_layer;
+
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
 
 }
@@ -49,12 +55,18 @@ void create_weather_layer(Window *window){
   
   // Get information about the Window
   Layer *window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_unobstructed_bounds(window_layer);
+  GRect bounds = layer_get_bounds(window_layer);
   
-  int width = bounds.size.w * 0.3;
+  s_weather_icon = gbitmap_create_with_resource(RESOURCE_ID_WEATHER_ICON_SUN);
+  s_weather_icon_layer = bitmap_layer_create(GRect(5, bounds.size.h - 30, 25, 25));
+  bitmap_layer_set_compositing_mode(s_weather_icon_layer, GCompOpSet);
+  bitmap_layer_set_bitmap(s_weather_icon_layer, s_weather_icon);
+  bitmap_layer_set_background_color(s_weather_icon_layer,backgroundColor);
+  
+  int width = 60;
   int height = 25;
-  int offsetX = 0;
-  int offsetY = 0;
+  int offsetX = 35;
+  int offsetY = bounds.size.h - height - 5;
   
   GRect layer_bounds = GRect(offsetX, offsetY, width, height);
   
@@ -62,15 +74,19 @@ void create_weather_layer(Window *window){
   s_weather_layer = text_layer_create(layer_bounds);
 
   // Style the text
-  text_layer_set_background_color(s_weather_layer, GColorClear);
+  text_layer_set_background_color(s_weather_layer, backgroundColor);
   text_layer_set_text_color(s_weather_layer, textColor);
   text_layer_set_font(s_weather_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
   text_layer_set_text_alignment(s_weather_layer, GTextAlignmentLeft);
   text_layer_set_text(s_weather_layer, "Loading...");
   
+  layer_add_child(window_layer, bitmap_layer_get_layer(s_weather_icon_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_weather_layer));
 }
 
 void destroy_weather_layer(){
+  gbitmap_destroy(s_weather_icon);
+  bitmap_layer_destroy(s_weather_icon_layer);
+  
   text_layer_destroy(s_weather_layer);
 }

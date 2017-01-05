@@ -61,7 +61,7 @@ void update_battery_bar(){
 void create_battery_bar_layer(Window *window) {
   // Get information about the Window
   Layer *window_layer = window_get_root_layer(window);
-  GRect bounds = layer_get_unobstructed_bounds(window_layer);
+  GRect bounds = layer_get_bounds(window_layer);
   
   // Create battery meter Layer
   layer_width = 50;

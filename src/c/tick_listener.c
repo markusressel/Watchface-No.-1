@@ -6,22 +6,28 @@
 static bool registered = false;
 
 // Method to react to tickHandler events (time changes)
-static void time_tick_handler(struct tm *tick_time, TimeUnits units_changed) {
-  update_time();
+static void tick_handler(struct tm *tick_time, TimeUnits units_changed) {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "updating time & date");
   update_date();
+  update_time();
 }
 
 void register_tick_listener() {
   if (registered) {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "ignoring register tick listener");
     return;
   } 
   
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "registering tick listener");
   // Register with TickTimerService
-  tick_timer_service_subscribe(MINUTE_UNIT, time_tick_handler);
+  tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
   registered = true;
 }
 
 void unregister_tick_listener() {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "unregistering tick listener");
+  
   // Unregister from TickTimerService
   tick_timer_service_unsubscribe();
+  registered = false;
 }

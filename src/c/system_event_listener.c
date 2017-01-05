@@ -11,11 +11,15 @@ static void connection_changed(bool connected) {
 }
 
 void register_system_event_listener() {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "registering system event listener");
+  
   connection_service_subscribe((ConnectionHandlers) {
     .pebble_app_connection_handler = connection_changed
   });
 }
 
 void unregister_system_event_listener() {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "unregistering system event listener");
+  
   connection_service_unsubscribe();
 }

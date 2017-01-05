@@ -4,9 +4,6 @@
     "keywords": [],
     "name": "watchface-no.1",
     "pebble": {
-        "capabilities": [
-            "health"
-        ],
         "displayName": "Watchface no.1",
         "enableMultiJS": true,
         "messageKeys": [],
@@ -14,10 +11,10 @@
         "resources": {
             "media": [
                 {
-                    "file": "data/weather_icon_sun_simple_weather_icon_01.png",
+                    "file": "images/_x30_1.png",
                     "name": "WEATHER_ICON_SUN",
                     "targetPlatforms": null,
-                    "type": "raw"
+                    "type": "bitmap"
                 }
             ]
         },
