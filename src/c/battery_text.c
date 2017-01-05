@@ -31,7 +31,7 @@ void create_battery_text_layer(Window *window){
   // set text properties
   text_layer_set_background_color(s_battery_text_layer, GColorClear);
   text_layer_set_text_color(s_battery_text_layer, textColor);
-  text_layer_set_font(s_battery_text_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
+  text_layer_set_font(s_battery_text_layer, batteryFont);
   text_layer_set_text(s_battery_text_layer, "99%");
   text_layer_set_text_alignment(s_battery_text_layer, GTextAlignmentRight);
   

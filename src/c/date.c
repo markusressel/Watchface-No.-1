@@ -40,7 +40,7 @@ void create_date_layer(Window *window) {
   // Improve the layout to be more like a watchface
   text_layer_set_background_color(s_date_layer, backgroundColor);
   text_layer_set_text_color(s_date_layer, textColor);
-  text_layer_set_font(s_date_layer, fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD));
+  text_layer_set_font(s_date_layer, dateFont);
   text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
   
   update_date();

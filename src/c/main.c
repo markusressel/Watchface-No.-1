@@ -59,7 +59,7 @@ static void main_window_unload(Window *window) {
 // initializes the watchface
 static void init() {
   // set theme
-  enum Theme theme = LIGHT;
+  enum Theme theme = DARK;
   init_theme(theme);
   
   // Create main Window element and assign to pointer

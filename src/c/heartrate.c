@@ -35,7 +35,7 @@ void create_heartrate_layer(Window *window) {
   // set styling
   text_layer_set_background_color(s_heartrate_layer, backgroundColor);
   text_layer_set_text_color(s_heartrate_layer, textColor);
-  text_layer_set_font(s_heartrate_layer, fonts_get_system_font(FONT_KEY_GOTHIC_18));
+  text_layer_set_font(s_heartrate_layer, heartrateFont);
   text_layer_set_text_alignment(s_heartrate_layer, GTextAlignmentCenter);
   
   // update value before rendering so it is shown right from the beginning

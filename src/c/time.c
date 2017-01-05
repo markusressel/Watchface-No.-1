@@ -40,7 +40,7 @@ void create_time_layer(Window *window) {
   // set styling
   text_layer_set_background_color(s_time_layer, backgroundColor);
   text_layer_set_text_color(s_time_layer, textColor);
-  text_layer_set_font(s_time_layer, fonts_get_system_font(FONT_KEY_BITHAM_34_MEDIUM_NUMBERS));
+  text_layer_set_font(s_time_layer, timeFont);
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
   
   // update time value before rendering so it is shown right from the beginning

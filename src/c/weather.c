@@ -1,5 +1,6 @@
 #include "weather.h"
 #include "theme.h"
+#include <pebble-effect-layer/pebble-effect-layer.h>
 
 // Weather TextLayer
 static TextLayer *s_weather_layer;
@@ -9,6 +10,9 @@ static GFont s_weather_font;
 
 // Weather icon
 static GBitmap *s_weather_icon;
+
+// Effect layer, covering the weather icon to change image color
+static EffectLayer *s_effect_layer;
 
 // Icon layer
 static BitmapLayer *s_weather_icon_layer;
@@ -57,15 +61,30 @@ void create_weather_layer(Window *window){
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
   
+  GRect icon_bounds = GRect(5, bounds.size.h - 30, 25, 25);
   s_weather_icon = gbitmap_create_with_resource(RESOURCE_ID_WEATHER_ICON_SUN);
-  s_weather_icon_layer = bitmap_layer_create(GRect(5, bounds.size.h - 30, 25, 25));
+  s_weather_icon_layer = bitmap_layer_create(icon_bounds);
   bitmap_layer_set_compositing_mode(s_weather_icon_layer, GCompOpSet);
   bitmap_layer_set_bitmap(s_weather_icon_layer, s_weather_icon);
-  bitmap_layer_set_background_color(s_weather_icon_layer,backgroundColor);
+  bitmap_layer_set_background_color(s_weather_icon_layer,GColorWhite);
+  
+  s_effect_layer = effect_layer_create(icon_bounds);
+  if (appTheme == DARK) {
+    //EffectColorpair colorpair_background;
+    //colorpair_background.firstColor = GColorWhite;
+    //colorpair_background.secondColor = backgroundColor;
+    //effect_layer_add_effect(s_effect_layer, effect_colorize, &colorpair_background);
+  
+    //EffectColorpair colorpair_foreground;
+    //colorpair_foreground.firstColor = GColorBlack;
+    //colorpair_foreground.secondColor = foregroundColor;
+    //effect_layer_add_effect(s_effect_layer, effect_colorize, &colorpair_foreground);
+    effect_layer_add_effect(s_effect_layer, effect_invert, NULL);
+  }
   
   int width = 60;
   int height = 25;
-  int offsetX = 35;
+  int offsetX = icon_bounds.size.w + 5 + 5;
   int offsetY = bounds.size.h - height - 5;
   
   GRect layer_bounds = GRect(offsetX, offsetY, width, height);
@@ -82,11 +101,13 @@ void create_weather_layer(Window *window){
   
   layer_add_child(window_layer, bitmap_layer_get_layer(s_weather_icon_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_weather_layer));
+  layer_add_child(window_layer, effect_layer_get_layer(s_effect_layer));
 }
 
 void destroy_weather_layer(){
   gbitmap_destroy(s_weather_icon);
   bitmap_layer_destroy(s_weather_icon_layer);
+  effect_layer_destroy(s_effect_layer);
   
   text_layer_destroy(s_weather_layer);
 }
