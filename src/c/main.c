@@ -8,6 +8,8 @@
 #include "phone_connection_indicator.h"
 #include "system_event_listener.h"
 #include "weather.h"
+#include "health_listener.h"
+#include "heartrate.h"
 #include "theme.h"
 
 // Main Window
@@ -22,6 +24,7 @@ static void main_window_load(Window *window) {
   create_battery_text_layer(window);
   create_phone_connection_indicator_layer(window);
   create_weather_layer(window);
+  create_heartrate_layer(window);
   
   // Register for tick events (time)
   register_tick_listener();
@@ -31,6 +34,8 @@ static void main_window_load(Window *window) {
   force_battery_update();
   // Register system event handler
   register_system_event_listener();
+  // Register health event listener
+  register_health_event_listener();
 }
 
 // destroys all components of the main window
@@ -39,8 +44,10 @@ static void main_window_unload(Window *window) {
   unregister_tick_listener();
   unregister_battery_listener();
   unregister_system_event_listener();
+  unregister_health_event_listener();
   
   // destroy layers
+  destroy_heartrate_layer();
   destroy_weather_layer();
   destroy_phone_connection_indicator_layer();
   destroy_battery_text_layer();

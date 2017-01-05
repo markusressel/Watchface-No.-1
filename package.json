@@ -4,6 +4,10 @@
     "keywords": [],
     "name": "watchface-no.1",
     "pebble": {
+        "capabilities": [
+            "location",
+            "health"
+        ],
         "displayName": "Watchface no.1",
         "enableMultiJS": true,
         "messageKeys": [],
