@@ -14,7 +14,7 @@ void update_time() {
   static char s_buffer[16];
   strftime(s_buffer, 
            sizeof(s_buffer),
-           clock_is_24h_style() ? "%H:%M:%S" : "%I:%M:%S",
+           clock_is_24h_style() ? "%H:%M" : "%I:%M",
            tick_time);
 
   // Display this time on the TextLayer

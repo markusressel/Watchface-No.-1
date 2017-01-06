@@ -8,8 +8,12 @@ static TextLayer *s_weather_layer;
 // Weather Font
 static GFont s_weather_font;
 
-// Weather icon
+// Weather icon Bitmap
 static GBitmap *s_weather_icon;
+
+// Weather icon PDC
+static Layer *s_weather_icon_canvas_layer;
+static GDrawCommandImage *s_weather_image_pdc;
 
 // Effect layer, covering the weather icon to change image color
 static EffectLayer *s_effect_layer;
@@ -31,6 +35,24 @@ static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResul
 
 static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
   APP_LOG(APP_LOG_LEVEL_INFO, "Outbox send success!");
+}
+
+static void weather_icon_update_proc(Layer *layer, GContext *ctx) {
+  // Place image in the center of the Window
+  GSize img_size = gdraw_command_image_get_bounds_size(s_weather_image_pdc);
+  GRect bounds = layer_get_bounds(layer);
+
+  const GEdgeInsets frame_insets = {
+    .top = (bounds.size.h - img_size.h) / 2,
+    .left = (bounds.size.w - img_size.w) / 2
+  };
+
+  // If the image was loaded successfully...
+  if (s_weather_image_pdc) {
+    // Draw it
+    gdraw_command_image_draw(ctx, s_weather_image_pdc, grect_inset(bounds, frame_insets).origin);
+  } 
+  
 }
 
 void update_weather(){
@@ -62,12 +84,24 @@ void create_weather_layer(Window *window){
   GRect bounds = layer_get_bounds(window_layer);
   
   GRect icon_bounds = GRect(5, bounds.size.h - 30, 25, 25);
+  
+  // Bitmap
   s_weather_icon = gbitmap_create_with_resource(RESOURCE_ID_WEATHER_ICON_SUN);
   s_weather_icon_layer = bitmap_layer_create(icon_bounds);
   bitmap_layer_set_compositing_mode(s_weather_icon_layer, GCompOpSet);
   bitmap_layer_set_bitmap(s_weather_icon_layer, s_weather_icon);
   bitmap_layer_set_background_color(s_weather_icon_layer,GColorWhite);
   
+  // PDC
+  s_weather_icon_canvas_layer = layer_create(icon_bounds);
+  layer_set_update_proc(s_weather_icon_canvas_layer, weather_icon_update_proc);
+  
+  s_weather_image_pdc = gdraw_command_image_create_with_resource(RESOURCE_ID_WEATHER_ICON_SUN_PDC);
+  if (!s_weather_image_pdc) {
+    APP_LOG(APP_LOG_LEVEL_ERROR, "Image is NULL!");
+  }
+  
+ 
   s_effect_layer = effect_layer_create(icon_bounds);
   if (appTheme == DARK) {
     //EffectColorpair colorpair_background;
@@ -99,14 +133,20 @@ void create_weather_layer(Window *window){
   text_layer_set_text_alignment(s_weather_layer, GTextAlignmentLeft);
   text_layer_set_text(s_weather_layer, "Loading...");
   
-  layer_add_child(window_layer, bitmap_layer_get_layer(s_weather_icon_layer));
+  //layer_add_child(window_layer, bitmap_layer_get_layer(s_weather_icon_layer));
+  layer_add_child(window_layer, s_weather_icon_canvas_layer);
   layer_add_child(window_layer, text_layer_get_layer(s_weather_layer));
   layer_add_child(window_layer, effect_layer_get_layer(s_effect_layer));
 }
 
 void destroy_weather_layer(){
+  // Destroy canvas Layer
+  layer_destroy(s_weather_icon_canvas_layer);
+  // Destroy the image
+  gdraw_command_image_destroy(s_weather_image_pdc);
+  
   gbitmap_destroy(s_weather_icon);
-  bitmap_layer_destroy(s_weather_icon_layer);
+  // bitmap_layer_destroy(s_weather_icon_layer);
   effect_layer_destroy(s_effect_layer);
   
   text_layer_destroy(s_weather_layer);

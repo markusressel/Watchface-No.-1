@@ -20,7 +20,7 @@ void register_tick_listener() {
   
   APP_LOG(APP_LOG_LEVEL_DEBUG, "registering tick listener");
   // Register with TickTimerService
-  tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
+  tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
   registered = true;
 }
 

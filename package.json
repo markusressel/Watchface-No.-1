@@ -17,6 +17,12 @@
         "resources": {
             "media": [
                 {
+                    "file": "data/sw-01.pdc",
+                    "name": "WEATHER_ICON_SUN_PDC",
+                    "targetPlatforms": null,
+                    "type": "raw"
+                },
+                {
                     "file": "images/_x30_1.png",
                     "name": "WEATHER_ICON_SUN",
                     "targetPlatforms": null,
