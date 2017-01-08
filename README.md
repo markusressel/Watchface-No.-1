@@ -9,6 +9,8 @@ The watchface currently contains the following layers:
 * Date
 * Battery (Text)
 * Battery (filled Icon)
+* Heartrate Monitor (animated Image + Text)
+* Phone connection indicator (image)
 
 # Theme
 Currently there is no compagnion app for this watchface so there is no way to customize it without recompiling the whole thing.
@@ -24,3 +26,6 @@ However it is possible to set a theme in code using the following line in ```mai
     }
     
 You can find (and customize) the Theme definitions in ```theme.h``` and ```theme.c``` respectively.
+
+# Fonts
+There are multipe variables to specify the font that should be used for every component of the watchface. Just like with the Theme you can set them in ```Theme.c```.
