@@ -19,7 +19,7 @@
         "resources": {
             "media": [
                 {
-                    "file": "images/1483867429_bluetooth-51x51.png",
+                    "file": "images/bt_icon.png",
                     "name": "PHONE_CONNECTION_ICON",
                     "targetPlatforms": null,
                     "type": "bitmap"

@@ -4,7 +4,8 @@
 
 static void set_fonts() {
   dateFont = fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD);
-  timeFont = fonts_get_system_font(FONT_KEY_BITHAM_34_MEDIUM_NUMBERS);
+  timeFont = fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD);
+  //timeFont = fonts_get_system_font(FONT_KEY_LECO_42_NUMBERS);
   batteryFont = fonts_get_system_font(FONT_KEY_GOTHIC_18);
   heartrateFont = fonts_get_system_font(FONT_KEY_GOTHIC_18);
   weatherFont = fonts_get_system_font(FONT_KEY_GOTHIC_18);
