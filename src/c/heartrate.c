@@ -263,10 +263,6 @@ void create_heartrate_layer(Window *window) {
   text_layer_set_text_color(s_heartrate_layer, textColorInverted);
   text_layer_set_font(s_heartrate_layer, heartrateFont);
   text_layer_set_text_alignment(s_heartrate_layer, GTextAlignmentCenter);
-  
-  
-  // setup heartbeat animation
-  initialize_heart_animation();
 
   // Add it as a child layer to the Window's root layer
   layer_add_child(window_layer, s_heart_icon_layer);
