@@ -40,14 +40,13 @@ static void phone_connection_indicator_update_proc(Layer *layer, GContext *ctx) 
     );                   
   }
   
-  if (is_phone_app_connected) {
+  if (!is_phone_app_connected) {
     graphics_context_set_stroke_color(ctx, GColorBlack);
     graphics_context_set_stroke_width(ctx, 5);
     
     // draw cross over icon
     graphics_draw_line(ctx, GPoint(5,5), GPoint(layer_bounds.size.w - 5, layer_bounds.size.h - 5));
     graphics_draw_line(ctx, GPoint(5,layer_bounds.size.h - 5), GPoint(layer_bounds.size.w - 5, 5));
-    // graphics_draw_line(ctx, GPoint(0,layer_bounds.size.h / 2), GPoint(layer_bounds.size.w, layer_bounds.size.h / 2));
   }
 }
 
