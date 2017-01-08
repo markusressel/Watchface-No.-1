@@ -40,7 +40,7 @@ static int s_heartbeat_animation_out_duration = 225;
 static int s_heartbeat_animation_in_duration = 150;
 // delay between a full heartbeat animation cycle
 static int s_heartbeat_animation_delay = 625;
-static const int s_heartbeat_animation_repeat_count = ANIMATION_DURATION_INFINITE;
+static const int s_heartbeat_animation_repeat_count = 10;
 static const int s_heartbeat_icon_animation_scale_big = 90;
 static const int s_heartbeat_icon_animation_scale_small = 70;
 // this has to be |scale_big - scale_small|
@@ -64,6 +64,7 @@ static void do_resize(int percent){
   }
   s_resized_heart_icon = scaleBitmap(s_heart_icon, percent, percent);
   layer_mark_dirty(s_heart_icon_layer);
+  layer_mark_dirty(effect_layer_get_layer(s_effect_layer));
 }
 
 static void inAnimationUpdate(struct Animation *animation, const AnimationProgress progress){
@@ -96,10 +97,15 @@ static void heart_icon_update_callback(Layer *layer, GContext* ctx) {
                                        s_heartbeat_icon_animation_scale_big);;
   }
   
+  // draw background color (for correct color inversion)
+  graphics_context_set_fill_color(ctx, GColorWhite);
+  GRect bounds = layer_get_bounds(layer);
+  graphics_fill_rect(ctx, bounds, 0, GCornerNone);
+  
   if(s_resized_heart_icon) {
     GRect bounds = gbitmap_get_bounds(s_resized_heart_icon);
     GRect layer_bounds = layer_get_bounds(layer);
-  
+    
     // Set the compositing mode (GCompOpSet is required for transparency)
     graphics_context_set_compositing_mode(ctx, GCompOpSet);
     
@@ -211,8 +217,6 @@ void update_heartrate() {
   static char s_buffer[8];
   snprintf(s_buffer, sizeof(s_buffer), "%d", (int)s_heartrate_bpm);
   
-  layer_mark_dirty(s_heart_icon_layer);
-  
   // Display this heartrate on the TextLayer
   text_layer_set_text(s_heartrate_layer, s_buffer);
 }
@@ -268,7 +272,6 @@ void create_heartrate_layer(Window *window) {
   initialize_heart_animation();
 
   // Add it as a child layer to the Window's root layer
-  //layer_add_child(window_layer, bitmap_layer_get_layer(s_heart_icon_layer));
   layer_add_child(window_layer, s_heart_icon_layer);
   layer_add_child(window_layer, effect_layer_get_layer(s_effect_layer)); // add here to only affect icon
   layer_add_child(window_layer, text_layer_get_layer(s_heartrate_layer));
