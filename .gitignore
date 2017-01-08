@@ -1,5 +1,5 @@
 # Private config files
-src/pkjs/config.js
+*config.js
 
 # Object files
 *.o
