@@ -116,26 +116,6 @@ static void heart_icon_update_callback(Layer *layer, GContext* ctx) {
   }
 }
 
-static void update_heart_animation() {
-  for(uint8_t i=0; i<NB_OF_IMAGES; i++){
-    Animation *inAnimation = s_arr[2*i];
-    Animation *outAnimation = s_arr[2*i+1];
-    
-    if (animation_is_scheduled(inAnimation)) {
-      animation_unschedule(inAnimation);
-    }
-    
-    if (animation_is_scheduled(outAnimation)) {
-      animation_unschedule(outAnimation);
-    }
-    
-    animation_set_delay(inAnimation, s_heartbeat_animation_delay);
-  }
-  
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "rescheduling heart animation");
-  animation_schedule(s_sequence);
-}
-
 static void destroy_heart_animation() {
   // destroy animation related data
   for(uint8_t i=0; i<NB_OF_IMAGES; i++){
@@ -182,8 +162,19 @@ static void initialize_heart_animation() {
   animation_set_play_count(s_sequence, s_heartbeat_animation_repeat_count);
 }
 
+// update heart animation properties if BPM changed
+static void update_heart_animation() {
+  initialize_heart_animation();
+  
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "rescheduling heart animation");
+  animation_schedule(s_sequence);
+}
+
 // Method to update the heartrate textbuffer
 void update_heartrate() {
+  // fake BPM for testing
+  s_heartrate_bpm = 90;
+  
   if (s_current_heartrate != s_heartrate_bpm) {
     APP_LOG(APP_LOG_LEVEL_DEBUG, "heartrate changed: new %d, old: %d", s_heartrate_bpm, s_current_heartrate);
     s_current_heartrate = s_heartrate_bpm;
@@ -194,6 +185,7 @@ void update_heartrate() {
         ((float) 60 / 
          s_heartrate_bpm * 1000 - 
          (s_heartbeat_animation_in_duration + s_heartbeat_animation_out_duration));
+      
       APP_LOG(APP_LOG_LEVEL_DEBUG, 
               "animation speed is now %d + %d + %d", 
               s_heartbeat_animation_out_duration, 
