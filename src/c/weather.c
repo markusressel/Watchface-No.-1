@@ -3,6 +3,9 @@
 #include <pebble-effect-layer/pebble-effect-layer.h>
 #include <pdc-transform/pdc-transform.h>
 
+static char s_temperature_buffer[8];
+static char s_conditions_buffer[32];
+
 // Weather TextLayer
 static TextLayer *s_weather_layer;
 
@@ -16,7 +19,17 @@ static BitmapLayer *s_weather_icon_layer;
 static EffectLayer *s_effect_layer;
 
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
-
+  // Read tuples for data
+  Tuple *temp_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_TEMPERATURE);
+  Tuple *condition_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_CONDITION);
+  
+  // If all data is available, use it
+  if(temp_tuple && condition_tuple) {
+    snprintf(s_temperature_buffer, sizeof(s_temperature_buffer), "%d°C", (int)temp_tuple->value->int32);
+    snprintf(s_conditions_buffer, sizeof(s_conditions_buffer), "%s", condition_tuple->value->cstring);
+  }
+  
+  update_weather();
 }
 
 static void inbox_dropped_callback(AppMessageResult reason, void *context) {
@@ -32,11 +45,14 @@ static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
 }
 
 void update_weather(){
+  // snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s, %s", temperature_buffer, conditions_buffer);
+  // text_layer_set_text(s_weather_layer, weather_layer_buffer);
+  
   // Write the current temperature into a buffer
-  static char s_buffer[8];
-  snprintf(s_buffer, sizeof(s_buffer), "33°C");
+  //static char s_buffer[8];
+  //snprintf(s_buffer, sizeof(s_buffer), "%s°C", temperature_buffer);
   // update text layer
-  text_layer_set_text(s_weather_layer, s_buffer);
+  text_layer_set_text(s_weather_layer, s_temperature_buffer);
 }
 
 static void initialize_app_message() {
@@ -91,10 +107,7 @@ void create_weather_layer(Window *window){
   text_layer_set_text_color(s_weather_layer, textColor);
   text_layer_set_font(s_weather_layer, weatherFont);
   text_layer_set_text_alignment(s_weather_layer, GTextAlignmentLeft);
-  text_layer_set_text(s_weather_layer, "Loading...");
-  
-  // initial weather update
-  update_weather();
+  text_layer_set_text(s_weather_layer, "---");
   
   layer_add_child(window_layer, bitmap_layer_get_layer(s_weather_icon_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_weather_layer));

@@ -1,5 +1,3 @@
-var myAPIKey = '';
-
 var xhrRequest = function (url, type, callback) {
   var xhr = new XMLHttpRequest();
   xhr.onload = function () {
@@ -12,7 +10,7 @@ var xhrRequest = function (url, type, callback) {
 function locationSuccess(pos) {
   // Construct URL
   var url = "http://api.openweathermap.org/data/2.5/weather?lat=" +
-      pos.coords.latitude + "&lon=" + pos.coords.longitude + '&appid=' + myAPIKey;
+      pos.coords.latitude + "&lon=" + pos.coords.longitude + '&appid=' + myWeatherAPIKey;
 
   // Send request to OpenWeatherMap
   xhrRequest(url, 'GET', 
@@ -30,8 +28,8 @@ function locationSuccess(pos) {
       
       // Assemble dictionary using our keys
       var dictionary = {
-        "KEY_TEMPERATURE": temperature,
-        "KEY_CONDITIONS": conditions
+        "WEATHER_TEMPERATURE": temperature,
+        "WEATHER_CONDITION": conditions
       };
 
       // Send to Pebble

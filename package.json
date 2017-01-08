@@ -14,7 +14,10 @@
         ],
         "displayName": "Watchface no.1",
         "enableMultiJS": true,
-        "messageKeys": [],
+        "messageKeys": [
+            "WEATHER_TEMPERATURE",
+            "WEATHER_CONDITION"
+        ],
         "projectType": "native",
         "resources": {
             "media": [
