@@ -1,3 +1,5 @@
+var config = require('./config');
+
 var xhrRequest = function (url, type, callback) {
   var xhr = new XMLHttpRequest();
   xhr.onload = function () {
@@ -10,7 +12,7 @@ var xhrRequest = function (url, type, callback) {
 function locationSuccess(pos) {
   // Construct URL
   var url = "http://api.openweathermap.org/data/2.5/weather?lat=" +
-      pos.coords.latitude + "&lon=" + pos.coords.longitude + '&appid=' + myWeatherAPIKey;
+      pos.coords.latitude + "&lon=" + pos.coords.longitude + '&appid=' + config.myWeatherAPIKey;
 
   // Send request to OpenWeatherMap
   xhrRequest(url, 'GET', 

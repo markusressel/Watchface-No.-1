@@ -22,12 +22,6 @@
         "resources": {
             "media": [
                 {
-                    "file": "images/bt_icon.png",
-                    "name": "PHONE_CONNECTION_ICON",
-                    "targetPlatforms": null,
-                    "type": "bitmap"
-                },
-                {
                     "file": "images/sw-01_25.png",
                     "name": "WEATHER_ICON_SUN",
                     "targetPlatforms": null,
@@ -36,6 +30,12 @@
                 {
                     "file": "images/heartrate_heart_filled.png",
                     "name": "HEARTRATE_ICON_HEART_FILLED",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/bt_icon.png",
+                    "name": "PHONE_CONNECTION_ICON",
                     "targetPlatforms": null,
                     "type": "bitmap"
                 }
