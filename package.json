@@ -19,14 +19,20 @@
         "resources": {
             "media": [
                 {
-                    "file": "images/heartrate_heart_filled.png",
-                    "name": "HEARTRATE_ICON_HEART_FILLED",
+                    "file": "images/1483867429_bluetooth-51x51.png",
+                    "name": "PHONE_CONNECTION_ICON",
                     "targetPlatforms": null,
                     "type": "bitmap"
                 },
                 {
                     "file": "images/sw-01_25.png",
                     "name": "WEATHER_ICON_SUN",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/heartrate_heart_filled.png",
+                    "name": "HEARTRATE_ICON_HEART_FILLED",
                     "targetPlatforms": null,
                     "type": "bitmap"
                 }
