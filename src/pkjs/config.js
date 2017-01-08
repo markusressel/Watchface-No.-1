@@ -1,2 +1,2 @@
 // Weather API key
-var myWeatherAPIKey = '1';
+var myWeatherAPIKey = '123';
