@@ -89,6 +89,8 @@ static void battery_update_proc(Layer *layer, GContext *ctx) {
 }
 
 static void destroy_battery_charging_animation() {
+  animation_unschedule(charging_animation);
+  
   // destroy animation related data
   animation_destroy(charging_animation);
 }

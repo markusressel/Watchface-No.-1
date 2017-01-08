@@ -21,10 +21,6 @@ static EffectLayer *s_effect_layer;
 
 // number of heartbeat animation images
 #define NB_OF_IMAGES 1
-// animation resources
-static uint32_t IMAGE_REOURCE_ID[NB_OF_IMAGES] = {
-  RESOURCE_ID_HEARTRATE_ICON_HEART_FILLED
-};
 
 // Heartbeat animation callbacks
 static AnimationImplementation inAnimImpl;
@@ -41,6 +37,7 @@ static int s_heartbeat_animation_in_duration = 150;
 // delay between a full heartbeat animation cycle
 static int s_heartbeat_animation_delay = 625;
 static const int s_heartbeat_animation_repeat_count = 10;
+// static const int s_heartbeat_animation_repeat_count = ANIMATION_DURATION_INFINITE;
 static const int s_heartbeat_icon_animation_scale_big = 90;
 static const int s_heartbeat_icon_animation_scale_small = 70;
 // this has to be |scale_big - scale_small|
@@ -264,13 +261,14 @@ void create_heartrate_layer(Window *window) {
   text_layer_set_font(s_heartrate_layer, heartrateFont);
   text_layer_set_text_alignment(s_heartrate_layer, GTextAlignmentCenter);
 
+  // update value before rendering so it is shown right from the beginning
+  s_heartrate_bpm = health_service_peek_current_value(HealthMetricHeartRateBPM);
+  update_heartrate();
+  
   // Add it as a child layer to the Window's root layer
   layer_add_child(window_layer, s_heart_icon_layer);
   layer_add_child(window_layer, effect_layer_get_layer(s_effect_layer)); // add here to only affect icon
   layer_add_child(window_layer, text_layer_get_layer(s_heartrate_layer));
-  
-  // update value before rendering so it is shown right from the beginning
-  update_heartrate();
 }
 
 // destroys the layer
