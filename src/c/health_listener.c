@@ -47,6 +47,9 @@ void register_health_event_listener() {
   if(!health_service_events_subscribe(health_handler, NULL)) {
     APP_LOG(APP_LOG_LEVEL_ERROR, "Health not available!");
   }
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "registering health listener");
+  s_heartrate_bpm = health_service_peek_current_value(HealthMetricHeartRateBPM);
+  
   registered = true;
   #else
   APP_LOG(APP_LOG_LEVEL_ERROR, "Health not available!");
@@ -54,6 +57,8 @@ void register_health_event_listener() {
 }
 
 void unregister_health_event_listener() {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "unregistering health listener");
+  
   health_service_events_unsubscribe();
   registered = false;
 }

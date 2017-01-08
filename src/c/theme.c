@@ -7,18 +7,22 @@ static void set_fonts() {
   timeFont = fonts_get_system_font(FONT_KEY_BITHAM_34_MEDIUM_NUMBERS);
   batteryFont = fonts_get_system_font(FONT_KEY_GOTHIC_18);
   heartrateFont = fonts_get_system_font(FONT_KEY_GOTHIC_18);
+  weatherFont = fonts_get_system_font(FONT_KEY_GOTHIC_18);
+  heartrateFont = fonts_get_system_font(FONT_KEY_GOTHIC_18);
 }
 
 static void set_colors() {
   switch (appTheme) {
     case DARK:
       textColor = GColorWhite;
+      textColorInverted = GColorBlack;
       backgroundColor = GColorBlack;
       foregroundColor = textColor;
       break;
     case LIGHT:
     default:
       textColor = GColorBlack;
+      textColorInverted = GColorWhite;
       backgroundColor = GColorWhite;
       foregroundColor = textColor;
       break;

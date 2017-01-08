@@ -13,10 +13,10 @@ enum Theme {
 EXTERN enum Theme appTheme;
 
 // theme color constants
-EXTERN GColor textColor, backgroundColor, foregroundColor;
+EXTERN GColor textColor, textColorInverted, backgroundColor, foregroundColor;
 
 // fonts
-EXTERN GFont dateFont, timeFont, batteryFont, heartrateFont;
+EXTERN GFont dateFont, timeFont, batteryFont, heartrateFont, weatherFont, heartrateFont;
 
 // method to set application theme
 void init_theme(enum Theme theme);

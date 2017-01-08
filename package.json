@@ -1,7 +1,9 @@
 {
     "author": "Markus Ressel",
     "dependencies": {
-        "pebble-effect-layer": "^1.1.4"
+        "pdc-transform": "^2.0.4",
+        "pebble-effect-layer": "^1.1.4",
+        "pebble-gbitmap-lib": "^1.0.4"
     },
     "keywords": [],
     "name": "watchface-no.1",
@@ -17,13 +19,13 @@
         "resources": {
             "media": [
                 {
-                    "file": "data/sw-01.pdc",
-                    "name": "WEATHER_ICON_SUN_PDC",
+                    "file": "images/heartrate_heart_filled.png",
+                    "name": "HEARTRATE_ICON_HEART_FILLED",
                     "targetPlatforms": null,
-                    "type": "raw"
+                    "type": "bitmap"
                 },
                 {
-                    "file": "images/_x30_1.png",
+                    "file": "images/sw-01_25.png",
                     "name": "WEATHER_ICON_SUN",
                     "targetPlatforms": null,
                     "type": "bitmap"

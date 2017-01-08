@@ -7,16 +7,24 @@
 
 static bool registered = false;
 
+static int s_current_battery_level = -1;
+
 static void battery_callback(BatteryChargeState state) {
   // Record the new battery level
   s_battery_level = state.charge_percent;
   s_battery_charging = state.is_charging;
   s_battery_cable_connected = state.is_plugged;
   
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery changed: %d", (int) s_battery_level);
-  
-  update_battery_text();
-  update_battery_bar();
+  if (s_current_battery_level == s_battery_level) {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Ignoring already set battery value: %d", (int) s_battery_level);
+  } else {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Battery changed: old: %d, new: %d", s_current_battery_level, (int) s_battery_level);
+    s_current_battery_level = s_battery_level;
+    
+    // informing listeners about change
+    update_battery_text();
+    update_battery_bar();
+  }
 }
 
 void register_battery_listener() {
