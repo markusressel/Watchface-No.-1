@@ -72,7 +72,7 @@ void create_phone_connection_indicator_layer(Window *window) {
   layer_set_update_proc(s_phone_connection_indicator_layer, phone_connection_indicator_update_proc);  
   
   s_connection_icon = gbitmap_create_with_resource(RESOURCE_ID_PHONE_CONNECTION_ICON);
-  s_connection_icon = scaleBitmap(s_connection_icon, 50, 50);
+  s_connection_icon = scaleBitmap(s_connection_icon, 40, 40);
   
   // Create effect layer
   s_effect_layer = effect_layer_create(layer_bounds);
