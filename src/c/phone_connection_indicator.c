@@ -83,7 +83,7 @@ void create_phone_connection_indicator_layer(Window *window) {
   s_effect_layer = effect_layer_create(layer_bounds);
   
   APP_LOG(APP_LOG_LEVEL_DEBUG, "checking ThemeValue");
-  if (strcmp(s_settings->ThemeValue, "DARK") == 0) {
+  if (strcmp(s_settings->ThemeValue, "LIGHT") != 0) {
     // add color inversion effect
     effect_layer_add_effect(s_effect_layer, effect_invert, NULL);
   }

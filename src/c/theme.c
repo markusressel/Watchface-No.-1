@@ -15,18 +15,18 @@ static void set_fonts() {
 
 static void set_colors() {
   switch (currentTheme) {
-    case DARK:
-      theme.TextColor = GColorWhite;
-      theme.TextColorInverted = GColorBlack;
-      theme.BackgroundColor = GColorBlack;
-      theme.ForegroundColor = GColorWhite;
-      break;
     case LIGHT:
-    default:
       theme.TextColor = GColorBlack;
       theme.TextColorInverted = GColorWhite;
       theme.BackgroundColor = GColorWhite;
       theme.ForegroundColor = GColorBlack;
+      break;
+    case DARK:
+    default:
+      theme.TextColor = GColorWhite;
+      theme.TextColorInverted = GColorBlack;
+      theme.BackgroundColor = GColorBlack;
+      theme.ForegroundColor = GColorWhite;
       break;
   } 
 }
