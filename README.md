@@ -1,7 +1,7 @@
 # Watchface No. 1
 A simple, modular watchface for the Pebble platform.
 
-<img src="/screenshot.jpg" width="400">
+<img src="/screenshot_2.jpg" width="600">
 
 # Content
 The watchface currently contains the following layers:
@@ -25,6 +25,8 @@ The watchface currently contains the following layers:
 
 # Theme
 The Theme can easily configured using the build in Settings screen, accessible in the Pebble app.
+
+<img src="/screen_dark_framed.png" width="236"><img src="/screen_light_framed.png" width="236">
 
 # Fonts
 There are multipe variables to specify the font that should be used for every component of the watchface. Currently those can only be changed in code. Have a look at the ```set_fonts()``` method in  ```Theme.c``` to modify them.
