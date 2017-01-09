@@ -6,26 +6,25 @@ A simple, modular watchface for the Pebble platform.
 # Content
 The watchface currently contains the following layers:
 * Time
+  * Hour, Minute and Second (if enabled in configuration)
 * Date
+  * Showing current Weekday abbreviation, day of month and month
 * Battery (Text)
+  * Showing current battery level
 * Battery (filled Icon)
+  * Showing a little lightning icon when connected to charger
+  * Animated when charging
 * Heartrate Monitor (animated Image + Text)
+  * Animated at the displayed heartrate
+    * The animation will only play 10 times to improve battery life
+    * The animation will play when opening the watchface or the heartrate value has changed
 * Phone connection indicator (image)
+  * Crossed out when disconnected from phone
+* Weather (Text)
+  * Showing current temperature
 
 # Theme
-Currently there is no compagnion app for this watchface so there is no way to customize it without recompiling the whole thing.
-However it is possible to set a theme in code using the following line in ```main.c```:
- 
-    static void init() {
-      // set theme
-      enum Theme theme = DARK;
-      init_theme(theme);
-      
-      [...]
-      
-    }
-    
-You can find (and customize) the Theme definitions in ```theme.h``` and ```theme.c``` respectively.
+The Theme can easily configured using the build in Settings screen, accessible in the Pebble app.
 
 # Fonts
-There are multipe variables to specify the font that should be used for every component of the watchface. Just like with the Theme you can set them in ```Theme.c```.
+There are multipe variables to specify the font that should be used for every component of the watchface. Currently those can only be changed in code. Have a look at the ```set_fonts()``` method in  ```Theme.c``` to modify them.
