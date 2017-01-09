@@ -25,8 +25,16 @@ The watchface currently contains the following layers:
 
 # Theme
 The Theme can easily configured using the build in Settings screen, accessible in the Pebble app.
+After saving your modified settings, the watchface needs to be restarted to reload the changed settings.
+To do this you can open the Pebble main menu and close it right after. The watchface will then have to reinitialize and load all settings from scratch.
 
-<img src="/screen_dark_framed.png" width="236"><img src="/screen_light_framed.png" width="236">
+The ```Enable Animations``` option currently has <b>no effect</b> and animations are always on. This will change in a future release.
+
+<img src="/settings.png" width="250">
+
+These are the two main Themes:
+
+<img src="/screen_dark_framed.png"><img src="/screen_light_framed.png">
 
 # Fonts
 There are multipe variables to specify the font that should be used for every component of the watchface. Currently those can only be changed in code. Have a look at the ```set_fonts()``` method in  ```Theme.c``` to modify them.
