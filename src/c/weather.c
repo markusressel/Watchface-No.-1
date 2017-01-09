@@ -1,10 +1,11 @@
-#include "weather.h"
 #include "theme.h"
 #include <pebble-effect-layer/pebble-effect-layer.h>
-#include <pdc-transform/pdc-transform.h>
+#include "weather.h"
 
-static char s_temperature_buffer[8];
-static char s_conditions_buffer[32];
+// static char s_temperature_buffer[8];
+// static char s_conditions_buffer[32];
+
+WeatherData weatherData;
 
 // Weather TextLayer
 static TextLayer *s_weather_layer;
@@ -18,30 +19,8 @@ static BitmapLayer *s_weather_icon_layer;
 // Effect layer, covering the weather icon to change image color
 static EffectLayer *s_effect_layer;
 
-static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
-  // Read tuples for data
-  Tuple *temp_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_TEMPERATURE);
-  Tuple *condition_tuple = dict_find(iterator, MESSAGE_KEY_WEATHER_CONDITION);
-  
-  // If all data is available, use it
-  if(temp_tuple && condition_tuple) {
-    snprintf(s_temperature_buffer, sizeof(s_temperature_buffer), "%d°C", (int)temp_tuple->value->int32);
-    snprintf(s_conditions_buffer, sizeof(s_conditions_buffer), "%s", condition_tuple->value->cstring);
-  }
-  
-  update_weather();
-}
-
-static void inbox_dropped_callback(AppMessageResult reason, void *context) {
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Message dropped!");
-}
-
-static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResult reason, void *context) {
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox send failed!");
-}
-
-static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
-  APP_LOG(APP_LOG_LEVEL_INFO, "Outbox send success!");
+WeatherData* weather_get_data() {
+  return &weatherData;
 }
 
 void update_weather(){
@@ -49,28 +28,13 @@ void update_weather(){
   // text_layer_set_text(s_weather_layer, weather_layer_buffer);
   
   // Write the current temperature into a buffer
-  //static char s_buffer[8];
-  //snprintf(s_buffer, sizeof(s_buffer), "%s°C", temperature_buffer);
+  static char s_buffer[8];
+  snprintf(s_buffer, sizeof(s_buffer), "%d°C", weatherData.CurrentTemperature);
   // update text layer
-  text_layer_set_text(s_weather_layer, s_temperature_buffer);
-}
-
-static void initialize_app_message() {
-  // Register callbacks
-  app_message_register_inbox_received(inbox_received_callback);
-  app_message_register_inbox_dropped(inbox_dropped_callback);
-  app_message_register_outbox_failed(outbox_failed_callback);
-  app_message_register_outbox_sent(outbox_sent_callback);
-  
-  // Open AppMessage
-  const int inbox_size = 128;
-  const int outbox_size = 128;
-  app_message_open(inbox_size, outbox_size);
+  text_layer_set_text(s_weather_layer, s_buffer);
 }
 
 void create_weather_layer(Window *window){
-  initialize_app_message();
-  
   // Get information about the Window
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);

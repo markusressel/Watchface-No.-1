@@ -10,6 +10,8 @@
 #include "weather.h"
 #include "health_listener.h"
 #include "heartrate.h"
+#include "app_messaging.h"
+#include "clay_settings.h"
 #include "theme.h"
 
 // Main Window
@@ -36,6 +38,8 @@ static void main_window_load(Window *window) {
   register_system_event_listener();
   // Register health event listener
   register_health_event_listener();
+  
+  initialize_app_messaging();
 }
 
 // destroys all components of the main window
@@ -58,14 +62,18 @@ static void main_window_unload(Window *window) {
 
 // initializes the watchface
 static void init() {
+  clay_load_settings();
+  ClaySettings *settings = clay_get_settings();
+  
   // set theme
   enum Theme theme = DARK;
   init_theme(theme);
   
   // Create main Window element and assign to pointer
   s_main_window = window_create();
+  
   // Apply theme
-  window_set_background_color(s_main_window, backgroundColor);
+  window_set_background_color(s_main_window, settings->BackgroundColor);
   
   // Set handler to manage the elements inside the Window
   window_set_window_handlers(s_main_window, (WindowHandlers) {

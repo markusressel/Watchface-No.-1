@@ -1,4 +1,5 @@
 #pragma once
+#include <pebble.h>
 
 // Themes
 enum Theme {

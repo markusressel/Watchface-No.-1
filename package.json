@@ -1,7 +1,7 @@
 {
     "author": "Markus Ressel",
     "dependencies": {
-        "pdc-transform": "^2.0.4",
+        "pebble-clay": "^1.0.4",
         "pebble-effect-layer": "^1.1.4",
         "pebble-gbitmap-lib": "^1.0.4"
     },
@@ -16,7 +16,12 @@
         "enableMultiJS": true,
         "messageKeys": [
             "WEATHER_TEMPERATURE",
-            "WEATHER_CONDITION"
+            "WEATHER_CONDITION",
+            "BackgroundColor",
+            "ForegroundColor",
+            "TextColor",
+            "ShowSeconds",
+            "ShowAnimations"
         ],
         "projectType": "native",
         "resources": {

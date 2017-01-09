@@ -1,8 +1,13 @@
 #include "time.h"
 #include "theme.h"
+#include "clay_settings.h"
 
 // Time TextLayer
 static TextLayer *s_time_layer;
+
+static ClaySettings *s_settings;
+
+static char *s_time_format;
 
 // Method to update the time textbuffer
 void update_time() {
@@ -26,6 +31,12 @@ void create_time_layer(Window *window) {
   // Get information about the Window
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
+  
+  s_settings = clay_get_settings();
+  s_time_format = clock_is_24h_style() ? "%H:%M" : "%I:%M";
+  if (s_settings->ShowSeconds) {
+    strcat(s_time_format, ":%S");
+  }
   
   int width = bounds.size.w;
   int height = 50;
