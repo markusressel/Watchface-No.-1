@@ -3,25 +3,38 @@
 #include "weather.h"
 #include "clay_settings.h"
 
-static ClaySettings *settings;
+static ClaySettings *s_settings;
 
 static void inbox_received_callback(DictionaryIterator *iterator, void *context) {
   // Read clay configuration properties
   
-  settings = clay_get_settings();
+  s_settings = clay_get_settings();
   
   // Read theme
   Tuple *theme_t = dict_find(iterator, MESSAGE_KEY_Theme);
   if(theme_t) {
     char *theme = theme_t->value->cstring;
     
-    if (strcmp(theme, "DARK") == 0) {
-      settings->ThemeValue = "DARK";
-    } else {
-      settings->ThemeValue = "LIGHT";
-    }
+    //if (strcmp(theme, "DARK") == 0) {
+    //  s_settings->ThemeValue = "DARK";
+    //} else if (strcmp(theme, "CUSTOM") == 0) {
+    //  strcpy(settings->ThemeValue, "CUSTOM");
+   //   s_settings->ThemeValue = "CUSTOM";
+   // } else {
+    //  s_settings->ThemeValue = "LIGHT";
+    //}
     
-    // settings->ThemeValue = theme;
+    //if (strcmp(theme, "DARK") == 0) {
+    //  strcpy(s_settings->ThemeValue, "DARK");
+    //} else if (strcmp(theme, "CUSTOM") == 0) {
+    //  strcpy(s_settings->ThemeValue, "CUSTOM");
+    //} else {
+    //  strcpy(s_settings->ThemeValue, "LIGHT");
+    //}
+    
+    strcpy(s_settings->ThemeValue, theme);
+    
+    // s_settings->ThemeValue = theme;
   }
   
   // Read color preferences
@@ -29,32 +42,38 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   if(bg_color_t) {
     GColor bg_color = GColorFromHEX(bg_color_t->value->int32);
     // APP_LOG(APP_LOG_LEVEL_DEBUG, "bg_color: old: %lu new: %lu", settings.BackgroundColor, bg_color);
-    settings->BackgroundColor = bg_color;
+    s_settings->BackgroundColor = bg_color;
   }
 
   Tuple *fg_color_t = dict_find(iterator, MESSAGE_KEY_ForegroundColor);
   if(fg_color_t) {
     GColor fg_color = GColorFromHEX(fg_color_t->value->int32);
-    settings->ForegroundColor = fg_color;
+    s_settings->ForegroundColor = fg_color;
   }
   
   Tuple *text_color_t = dict_find(iterator, MESSAGE_KEY_TextColor);
   if(text_color_t) {
     GColor text_color = GColorFromHEX(text_color_t->value->int32);
-    settings->TextColor = text_color;
+    s_settings->TextColor = text_color;
+  }
+  
+  Tuple *text_color_inverted_t = dict_find(iterator, MESSAGE_KEY_TextColorInverted);
+  if(text_color_inverted_t) {
+    GColor text_color_inverted = GColorFromHEX(text_color_inverted_t->value->int32);
+    s_settings->TextColorInverted = text_color_inverted;
   }
 
   // Read boolean preferences
   Tuple *show_seconds_t = dict_find(iterator, MESSAGE_KEY_ShowSeconds);
   if(show_seconds_t) {
     bool show_seconds = show_seconds_t->value->int32 == 1;
-    settings->ShowSeconds = show_seconds;
+    s_settings->ShowSeconds = show_seconds;
   }
   
   Tuple *show_animations_t = dict_find(iterator, MESSAGE_KEY_ShowAnimations);
   if(show_animations_t) {
     bool show_animations = show_animations_t->value->int32 == 1;
-    settings->ShowAnimations = show_animations;
+    s_settings->ShowAnimations = show_animations;
   }
   
   // Read weather data

@@ -6,13 +6,14 @@ static ClaySettings settings;
 
 // Initialize the default settings
 static void clay_default_settings() {
+  settings.BackgroundColor = GColorWhite;
+  settings.ForegroundColor = GColorBlack;
+  settings.TextColor = GColorBlack;
+  settings.TextColorInverted = GColorWhite;
+  
   settings.ShowSeconds = false;
   settings.ShowAnimations = true;
-  
-  // set theme
-  // enum ThemeValues theme = DARK;
-  //settings.ThemeValue = theme;
-  settings.ThemeValue = "DARK";
+  strcpy(settings.ThemeValue, "DARK");
 }
 
 ClaySettings* clay_get_settings() {

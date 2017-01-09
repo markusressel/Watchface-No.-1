@@ -10,6 +10,7 @@
     "pebble": {
         "capabilities": [
             "location",
+            "configurable",
             "health"
         ],
         "displayName": "Watchface no.1",
@@ -22,7 +23,8 @@
             "TextColor",
             "ShowSeconds",
             "ShowAnimations",
-            "Theme"
+            "Theme",
+            "TextColorInverted"
         ],
         "projectType": "native",
         "resources": {

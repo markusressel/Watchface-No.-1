@@ -17,6 +17,8 @@
 // Main Window
 static Window *s_main_window;
 
+static ClaySettings *s_settings;
+
 // loads componentents into the main window
 static void main_window_load(Window *window) {
   // Create layers
@@ -70,17 +72,45 @@ static void main_window_unload(Window *window) {
 // initializes the watchface
 static void init() {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "initializing settings");
+  // load clay configuration
   clay_load_settings();
-  ClaySettings *settings = clay_get_settings();
+  s_settings = clay_get_settings();
   
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "mapping theme value to enum");
+  // map clay configuration value to ThemeEnum
+  
+  if (!s_settings) {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Settings are NULL!");
+  } else {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "Settings are valid :)");
+    if (!s_settings->ThemeValue) {
+      APP_LOG(APP_LOG_LEVEL_DEBUG, "ThemeValue is NULL!");
+    } else {
+      APP_LOG(APP_LOG_LEVEL_DEBUG, "ThemeValue is valid :)");
+    }
+  }
+  
+  if (!s_settings->ThemeValue) {
+    strcpy(s_settings->ThemeValue, "DARK");
+  }
+  
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "ThemeValue: %s", s_settings->ThemeValue);
   enum ThemeEnum theme;
-  if (strcmp(settings->ThemeValue, "LIGHT") == 0) {
+  if (strcmp(s_settings->ThemeValue, "LIGHT") == 0) {
     theme = LIGHT;
+  } else if (strcmp(s_settings->ThemeValue, "CUSTOM") == 0) {
+    theme = CUSTOM;
   } else {
     theme = DARK;
   }
   
-  init_theme(theme);
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "initializing theme");
+  // initialize theme based on ThemeEnum
+  if (theme == CUSTOM) {
+    init_custom_theme(s_settings->BackgroundColor, s_settings->ForegroundColor, s_settings->TextColor, s_settings->TextColorInverted);
+  } else {
+    init_theme(theme);
+  }
   
   // Create main Window element and assign to pointer
   s_main_window = window_create();

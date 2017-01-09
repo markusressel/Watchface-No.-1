@@ -8,8 +8,9 @@ typedef struct ClaySettings {
   GColor BackgroundColor;
   GColor ForegroundColor;
   GColor TextColor;
+  GColor TextColorInverted;
   
-  char* ThemeValue;
+  char ThemeValue[10];
   
   bool ShowSeconds;
   bool ShowAnimations;

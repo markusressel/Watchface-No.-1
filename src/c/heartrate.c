@@ -245,7 +245,7 @@ void create_heartrate_layer(Window *window) {
   // Create effect layer
   s_effect_layer = effect_layer_create(icon_bounds);
   
-  if (strcmp(s_settings->ThemeValue, "LIGHT") != 0) {
+  if (theme_get_theme()->CurrentThemeEnum == DARK) {
     // add color inversion effect
     effect_layer_add_effect(s_effect_layer, effect_invert, NULL);
   }

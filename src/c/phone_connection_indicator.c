@@ -4,6 +4,7 @@
 #include <pebble-effect-layer/pebble-effect-layer.h>
 #include <pebble-gbitmap-lib/gbitmap_tools.h>
 #include "clay_settings.h"
+#include "theme.h"
 
 static ClaySettings *s_settings;
 
@@ -83,7 +84,7 @@ void create_phone_connection_indicator_layer(Window *window) {
   s_effect_layer = effect_layer_create(layer_bounds);
   
   APP_LOG(APP_LOG_LEVEL_DEBUG, "checking ThemeValue");
-  if (strcmp(s_settings->ThemeValue, "LIGHT") != 0) {
+  if (theme_get_theme()->CurrentThemeEnum == DARK) {
     // add color inversion effect
     effect_layer_add_effect(s_effect_layer, effect_invert, NULL);
   }

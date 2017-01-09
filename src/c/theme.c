@@ -35,10 +35,22 @@ Theme* theme_get_theme(){
   return &theme;
 }
 
-void init_theme(enum ThemeEnum theme) {
- //  s_settings = clay_get_settings();
-  currentTheme = theme;
+void init_theme(enum ThemeEnum themeEnum) {
+  theme.CurrentThemeEnum = themeEnum;
+  currentTheme = themeEnum;
   
   set_colors();
+  set_fonts();
+}
+
+void init_custom_theme(GColor backgroundColor, GColor foregroundColor, GColor textColor, GColor textColorInverted) {
+  theme.CurrentThemeEnum = CUSTOM;
+  currentTheme = CUSTOM;
+  
+  theme.BackgroundColor = backgroundColor;
+  theme.ForegroundColor = foregroundColor;
+  theme.TextColor = textColor;
+  theme.TextColorInverted = textColorInverted;
+  
   set_fonts();
 }

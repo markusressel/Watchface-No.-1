@@ -55,7 +55,7 @@ void create_weather_layer(Window *window){
   
   // create effect layer to modify image colors based on current theme
   s_effect_layer = effect_layer_create(icon_bounds);
-  if (strcmp(s_settings->ThemeValue, "DARK") == 0) {
+  if (theme_get_theme()->CurrentThemeEnum == DARK) {
     // invert colors for dark theme
     effect_layer_add_effect(s_effect_layer, effect_invert, NULL);
   }
