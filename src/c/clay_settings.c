@@ -2,15 +2,17 @@
 #include "clay_settings.h"
 
 // An instance of the struct
-ClaySettings settings;
+static ClaySettings settings;
 
 // Initialize the default settings
 static void clay_default_settings() {
-  settings.BackgroundColor = GColorBlack;
-  settings.ForegroundColor = GColorWhite;
-  settings.TextColor = GColorWhite;
   settings.ShowSeconds = false;
   settings.ShowAnimations = true;
+  
+  // set theme
+  // enum ThemeValues theme = DARK;
+  //settings.ThemeValue = theme;
+  settings.ThemeValue = "DARK";
 }
 
 ClaySettings* clay_get_settings() {

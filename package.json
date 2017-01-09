@@ -21,7 +21,8 @@
             "ForegroundColor",
             "TextColor",
             "ShowSeconds",
-            "ShowAnimations"
+            "ShowAnimations",
+            "Theme"
         ],
         "projectType": "native",
         "resources": {

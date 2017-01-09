@@ -12,7 +12,40 @@ module.exports = [
     "items": [
       {
         "type": "heading",
+        "defaultValue": "Theme"
+      },
+      {
+        "type": "radiogroup",
+        "messageKey": "Theme",
+        "label": "Theme",
+        "defaultValue": "DARK",
+        "options": [
+          { 
+            "label": "Dark", 
+            "value": "DARK" 
+          },
+          { 
+            "label": "Light", 
+            "value": "LIGHT" 
+          },
+          { 
+            "label": "Custom", 
+            "value": "CUSTOM" 
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "type": "section",
+    "items": [
+      {
+        "type": "heading",
         "defaultValue": "Colors"
+      },
+      {
+        "type": "text",
+        "defaultValue": "These values will only have effect if you have selected \"Custom\" Theme in the section above."
       },
       {
         "type": "color",

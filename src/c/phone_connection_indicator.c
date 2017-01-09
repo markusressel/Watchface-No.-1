@@ -3,7 +3,9 @@
 #include "system_event_listener.h"
 #include <pebble-effect-layer/pebble-effect-layer.h>
 #include <pebble-gbitmap-lib/gbitmap_tools.h>
-#include "theme.h"
+#include "clay_settings.h"
+
+static ClaySettings *s_settings;
 
 // phone connection indicator layer
 static Layer *s_phone_connection_indicator_layer;
@@ -62,6 +64,9 @@ void create_phone_connection_indicator_layer(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   // GRect bounds = layer_get_bounds(window_layer);
   
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "retreiving settings");
+  s_settings = clay_get_settings();
+  
   // Create battery meter Layer
   int width = 25;
   int height = 25;
@@ -77,14 +82,17 @@ void create_phone_connection_indicator_layer(Window *window) {
   // Create effect layer
   s_effect_layer = effect_layer_create(layer_bounds);
   
-  if (appTheme == DARK) {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "checking ThemeValue");
+  if (strcmp(s_settings->ThemeValue, "DARK") == 0) {
     // add color inversion effect
     effect_layer_add_effect(s_effect_layer, effect_invert, NULL);
   }
   
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "updating indicator");
   // force update
   update_phone_connection_indicator();
   
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "adding to parent");
   // Add to Window
   layer_add_child(window_get_root_layer(window), s_phone_connection_indicator_layer);
   layer_add_child(window_layer, effect_layer_get_layer(s_effect_layer));

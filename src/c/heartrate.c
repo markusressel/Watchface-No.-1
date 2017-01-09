@@ -3,7 +3,10 @@
 #include "health_listener.h"
 #include <pebble-effect-layer/pebble-effect-layer.h>
 #include <pebble-gbitmap-lib/gbitmap_tools.h>
+#include "clay_settings.h"
 #include "theme.h"
+
+static ClaySettings *s_settings;
 
 // Heartrate TextLayer
 static TextLayer *s_heartrate_layer;
@@ -221,6 +224,8 @@ void create_heartrate_layer(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
   
+  s_settings = clay_get_settings();
+  
   int icon_width = 50;
   int icon_height = 50;
   int icon_offsetX = bounds.size.w - icon_width;
@@ -240,7 +245,7 @@ void create_heartrate_layer(Window *window) {
   // Create effect layer
   s_effect_layer = effect_layer_create(icon_bounds);
   
-  if (appTheme == DARK) {
+  if (strcmp(s_settings->ThemeValue, "DARK") == 0) {
     // add color inversion effect
     effect_layer_add_effect(s_effect_layer, effect_invert, NULL);
   }
@@ -257,8 +262,8 @@ void create_heartrate_layer(Window *window) {
   
   // set styling
   text_layer_set_background_color(s_heartrate_layer, GColorClear);
-  text_layer_set_text_color(s_heartrate_layer, textColorInverted);
-  text_layer_set_font(s_heartrate_layer, heartrateFont);
+  text_layer_set_text_color(s_heartrate_layer, theme_get_theme()->TextColorInverted);
+  text_layer_set_font(s_heartrate_layer, theme_get_theme()->HeartrateFont);
   text_layer_set_text_alignment(s_heartrate_layer, GTextAlignmentCenter);
 
   // update value before rendering so it is shown right from the beginning

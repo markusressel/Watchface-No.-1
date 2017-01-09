@@ -1,7 +1,10 @@
 #include "battery_text.h"
 #include "battery.h"
-#include "theme.h"
+#include "clay_settings.h"
 #include "battery_listener.h"
+#include "theme.h"
+
+static ClaySettings *s_settings;
 
 // battery text layer
 static TextLayer *s_battery_text_layer;
@@ -19,6 +22,8 @@ void create_battery_text_layer(Window *window){
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
   
+  s_settings = clay_get_settings();
+  
   int width = bounds.size.w;
   int height = 50;
   int offsetX = 0;
@@ -30,8 +35,8 @@ void create_battery_text_layer(Window *window){
   
   // set text properties
   text_layer_set_background_color(s_battery_text_layer, GColorClear);
-  text_layer_set_text_color(s_battery_text_layer, textColor);
-  text_layer_set_font(s_battery_text_layer, batteryFont);
+  text_layer_set_text_color(s_battery_text_layer, theme_get_theme()->TextColor);
+  text_layer_set_font(s_battery_text_layer, theme_get_theme()->BatteryFont);
   text_layer_set_text(s_battery_text_layer, "99%");
   text_layer_set_text_alignment(s_battery_text_layer, GTextAlignmentRight);
   

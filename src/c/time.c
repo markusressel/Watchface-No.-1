@@ -1,6 +1,6 @@
 #include "time.h"
-#include "theme.h"
 #include "clay_settings.h"
+#include "theme.h"
 
 // Time TextLayer
 static TextLayer *s_time_layer;
@@ -19,7 +19,7 @@ void update_time() {
   static char s_buffer[16];
   strftime(s_buffer, 
            sizeof(s_buffer),
-           clock_is_24h_style() ? "%H:%M" : "%I:%M",
+           s_time_format,
            tick_time);
 
   // Display this time on the TextLayer
@@ -33,6 +33,7 @@ void create_time_layer(Window *window) {
   GRect bounds = layer_get_bounds(window_layer);
   
   s_settings = clay_get_settings();
+  
   s_time_format = clock_is_24h_style() ? "%H:%M" : "%I:%M";
   if (s_settings->ShowSeconds) {
     strcat(s_time_format, ":%S");
@@ -49,9 +50,9 @@ void create_time_layer(Window *window) {
   s_time_layer = text_layer_create(layer_bounds);
   
   // set styling
-  text_layer_set_background_color(s_time_layer, backgroundColor);
-  text_layer_set_text_color(s_time_layer, textColor);
-  text_layer_set_font(s_time_layer, timeFont);
+  text_layer_set_background_color(s_time_layer, theme_get_theme()->BackgroundColor);
+  text_layer_set_text_color(s_time_layer, theme_get_theme()->TextColor);
+  text_layer_set_font(s_time_layer, theme_get_theme()->TimeFont);
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
   
   // update time value before rendering so it is shown right from the beginning

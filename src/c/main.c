@@ -20,12 +20,19 @@ static Window *s_main_window;
 // loads componentents into the main window
 static void main_window_load(Window *window) {
   // Create layers
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "initializing time layer");
   create_time_layer(window);
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "initializing date layer");
   create_date_layer(window);
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "initializing battery bar layer");
   create_battery_bar_layer(window);
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "initializing battery text layer");
   create_battery_text_layer(window);
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "initializing phone connection layer");
   create_phone_connection_indicator_layer(window);
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "initializing weather layer");
   create_weather_layer(window);
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "initializing heartrate layer");
   create_heartrate_layer(window);
   
   // Register for tick events (time)
@@ -62,18 +69,25 @@ static void main_window_unload(Window *window) {
 
 // initializes the watchface
 static void init() {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "initializing settings");
   clay_load_settings();
   ClaySettings *settings = clay_get_settings();
   
-  // set theme
-  enum Theme theme = DARK;
+  enum ThemeEnum theme;
+  if (strcmp(settings->ThemeValue, "LIGHT") == 0) {
+    theme = LIGHT;
+  } else {
+    theme = DARK;
+  }
+  
   init_theme(theme);
   
   // Create main Window element and assign to pointer
   s_main_window = window_create();
   
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "applying window background");
   // Apply theme
-  window_set_background_color(s_main_window, settings->BackgroundColor);
+  window_set_background_color(s_main_window, theme_get_theme()->BackgroundColor);
   
   // Set handler to manage the elements inside the Window
   window_set_window_handlers(s_main_window, (WindowHandlers) {

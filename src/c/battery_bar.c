@@ -1,7 +1,10 @@
 #include "battery_bar.h"
 #include "battery.h"
-#include "theme.h"
+#include "clay_settings.h"
 #include "battery_listener.h"
+#include "theme.h"
+
+static ClaySettings *s_settings;
 
 // battery bar layer
 static Layer *s_battery_bar_layer;
@@ -55,14 +58,14 @@ static void battery_update_proc(Layer *layer, GContext *ctx) {
   // Draw battery icon rectangle
   GRect batteryBorder = bounds;
   batteryBorder.size.w -= 2;
-  graphics_context_set_stroke_color(ctx, foregroundColor);
+  graphics_context_set_stroke_color(ctx, theme_get_theme()->ForegroundColor);
   graphics_draw_rect(ctx, batteryBorder);
   
   // Draw battery +(plus)-pole
   int poleHeight = bounds.size.h * 0.5;
   int poleWidth = 2;
   GRect batteryPole = GRect(bounds.size.w - poleWidth, bounds.size.h / 2 - poleHeight / 2, poleWidth, poleHeight);
-  graphics_context_set_fill_color(ctx, foregroundColor);
+  graphics_context_set_fill_color(ctx, theme_get_theme()->ForegroundColor);
   graphics_fill_rect(ctx, batteryPole, 0, GCornerNone);
 
   int insetX = 2;
@@ -70,18 +73,18 @@ static void battery_update_proc(Layer *layer, GContext *ctx) {
   
   // Draw the bar inside
   int fillWidth = (s_current_battery_level * (layer_width - insetY * 2 - poleWidth)) / 100;
-  graphics_context_set_fill_color(ctx, foregroundColor);
+  graphics_context_set_fill_color(ctx, theme_get_theme()->ForegroundColor);
   graphics_fill_rect(ctx, GRect(insetX, insetY, fillWidth, bounds.size.h - insetX * 2), 0, GCornerNone);
   
   if (s_battery_cable_connected) {
     // Draw cable
     
     // Fill the path:
-    graphics_context_set_fill_color(ctx, backgroundColor);
+    graphics_context_set_fill_color(ctx, theme_get_theme()->BackgroundColor);
     gpath_draw_filled(ctx, s_my_path_ptr);
     // Stroke the path:
     graphics_context_set_stroke_width(ctx, 1);
-    graphics_context_set_stroke_color(ctx, backgroundColor);
+    graphics_context_set_stroke_color(ctx, theme_get_theme()->BackgroundColor);
     gpath_draw_outline(ctx, s_my_path_ptr);
     
    // graphics_draw_line(ctx, GPoint(0 ,bounds.size.h / 2), GPoint(bounds.size.w ,bounds.size.h / 2));
@@ -136,6 +139,8 @@ void create_battery_bar_layer(Window *window) {
   // Get information about the Window
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
+  
+  s_settings = clay_get_settings();
   
   // Create battery meter Layer
   layer_width = 50;

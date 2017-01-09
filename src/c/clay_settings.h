@@ -8,6 +8,9 @@ typedef struct ClaySettings {
   GColor BackgroundColor;
   GColor ForegroundColor;
   GColor TextColor;
+  
+  char* ThemeValue;
+  
   bool ShowSeconds;
   bool ShowAnimations;
 } __attribute__((__packed__)) ClaySettings;

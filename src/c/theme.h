@@ -1,23 +1,27 @@
 #pragma once
 #include <pebble.h>
 
+typedef struct Theme {
+  GColor BackgroundColor;
+  GColor ForegroundColor;
+  GColor TextColor;
+  GColor TextColorInverted;
+  
+  GFont TimeFont;
+  GFont DateFont;
+  GFont BatteryFont;
+  GFont HeartrateFont;
+  GFont WeatherFont;
+} __attribute__((__packed__)) Theme;
+
 // Themes
-enum Theme {
+enum ThemeEnum {
   DARK,
   LIGHT
 };
 
-#ifndef EXTERN
-#define EXTERN extern
-#endif
-
-EXTERN enum Theme appTheme;
-
-// theme color constants
-EXTERN GColor textColor, textColorInverted, backgroundColor, foregroundColor;
-
-// fonts
-EXTERN GFont dateFont, timeFont, batteryFont, heartrateFont, weatherFont, heartrateFont;
+// Get current Theme struct
+Theme* theme_get_theme();
 
 // method to set application theme
-void init_theme(enum Theme theme);
+void init_theme(enum ThemeEnum theme);

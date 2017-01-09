@@ -1,6 +1,9 @@
 #include <pebble.h>
 #include "date.h"
+#include "clay_settings.h"
 #include "theme.h"
+
+static ClaySettings *s_settings;
 
 // Date TextLayer
 static TextLayer *s_date_layer;
@@ -27,6 +30,8 @@ void create_date_layer(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
   
+  s_settings = clay_get_settings();
+  
   int width = bounds.size.w;
   int height = 35;
   int offsetX = (bounds.size.w - width) / 2;
@@ -38,9 +43,9 @@ void create_date_layer(Window *window) {
   s_date_layer = text_layer_create(layer_bounds);
   
   // Improve the layout to be more like a watchface
-  text_layer_set_background_color(s_date_layer, backgroundColor);
-  text_layer_set_text_color(s_date_layer, textColor);
-  text_layer_set_font(s_date_layer, dateFont);
+  text_layer_set_background_color(s_date_layer, theme_get_theme()->BackgroundColor);
+  text_layer_set_text_color(s_date_layer, theme_get_theme()->TextColor);
+  text_layer_set_font(s_date_layer, theme_get_theme()->DateFont);
   text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
   
   update_date();

@@ -10,6 +10,20 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   
   settings = clay_get_settings();
   
+  // Read theme
+  Tuple *theme_t = dict_find(iterator, MESSAGE_KEY_Theme);
+  if(theme_t) {
+    char *theme = theme_t->value->cstring;
+    
+    if (strcmp(theme, "DARK") == 0) {
+      settings->ThemeValue = "DARK";
+    } else {
+      settings->ThemeValue = "LIGHT";
+    }
+    
+    // settings->ThemeValue = theme;
+  }
+  
   // Read color preferences
   Tuple *bg_color_t = dict_find(iterator, MESSAGE_KEY_BackgroundColor);
   if(bg_color_t) {
