@@ -3,8 +3,7 @@
 #include "clay_settings.h"
 #include "theme.h"
 
-// static char s_temperature_buffer[8];
-// static char s_conditions_buffer[32];
+static char s_buffer[32];
 
 WeatherData weatherData;
 
@@ -27,14 +26,32 @@ WeatherData* weather_get_data() {
 }
 
 void update_weather(){
-  // snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s, %s", temperature_buffer, conditions_buffer);
-  // text_layer_set_text(s_weather_layer, weather_layer_buffer);
-  
   // Write the current temperature into a buffer
-  static char s_buffer[8];
-  snprintf(s_buffer, sizeof(s_buffer), "%d°C", weatherData.CurrentTemperature);
+  snprintf(s_buffer, sizeof(s_buffer), "%d°C\n%s", weatherData.CurrentTemperature, weatherData.CurrentConditions);
   // update text layer
   text_layer_set_text(s_weather_layer, s_buffer);
+  
+  // find image matching confition
+  // TODO:
+  int resourceId;
+  if (strstr(weatherData.CurrentConditions, "Clear")) {
+    resourceId = RESOURCE_ID_WEATHER_ICON_SUN;
+  } else if (strstr(weatherData.CurrentConditions, "Clouds")) {
+    resourceId = RESOURCE_ID_WEATHER_ICON_CLOUDS;
+  } else {
+    resourceId = RESOURCE_ID_WEATHER_ICON_RAIN;
+  }
+  
+  // free any previous loaded image
+  if (s_weather_icon) {
+    gbitmap_destroy(s_weather_icon);
+  }
+  // set new image
+  s_weather_icon = gbitmap_create_with_resource(resourceId);
+  
+  // update bitmap layer
+  bitmap_layer_set_bitmap(s_weather_icon_layer, s_weather_icon);
+  layer_mark_dirty(bitmap_layer_get_layer(s_weather_icon_layer));
 }
 
 void create_weather_layer(Window *window){
@@ -42,7 +59,7 @@ void create_weather_layer(Window *window){
   Layer *window_layer = window_get_root_layer(window);
   GRect bounds = layer_get_bounds(window_layer);
   
-  GRect icon_bounds = GRect(5, bounds.size.h - 30, 0, 0);
+  GRect icon_bounds = GRect(5, bounds.size.h - 30 - 5, 30, 30);
   
   // Bitmap
   s_weather_icon = gbitmap_create_with_resource(RESOURCE_ID_WEATHER_ICON_SUN);
@@ -62,7 +79,7 @@ void create_weather_layer(Window *window){
   
   // set bounds and offset for text layer
   int width = 60;
-  int height = 25;
+  int height = 36;
   int offsetX = icon_bounds.size.w + 5 + 5;
   int offsetY = bounds.size.h - height - 5;
   

@@ -30,6 +30,18 @@
         "resources": {
             "media": [
                 {
+                    "file": "images/sw-22.png",
+                    "name": "WEATHER_ICON_RAIN",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/sw-06.png",
+                    "name": "WEATHER_ICON_CLOUDS",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/sw-01_25.png",
                     "name": "WEATHER_ICON_SUN",
                     "targetPlatforms": null,

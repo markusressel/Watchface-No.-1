@@ -99,12 +99,11 @@ static void heart_icon_update_callback(Layer *layer, GContext* ctx) {
   
   // draw background color (for correct color inversion)
   graphics_context_set_fill_color(ctx, GColorWhite);
-  GRect bounds = layer_get_bounds(layer);
-  graphics_fill_rect(ctx, bounds, 0, GCornerNone);
+  GRect layer_bounds = layer_get_bounds(layer);
+  graphics_fill_rect(ctx, layer_bounds, 0, GCornerNone);
   
   if(s_resized_heart_icon) {
     GRect bounds = gbitmap_get_bounds(s_resized_heart_icon);
-    GRect layer_bounds = layer_get_bounds(layer);
     
     // Set the compositing mode (GCompOpSet is required for transparency)
     graphics_context_set_compositing_mode(ctx, GCompOpSet);
@@ -226,7 +225,7 @@ void create_heartrate_layer(Window *window) {
   
   s_settings = clay_get_settings();
   
-  int icon_width = 50;
+  int icon_width = 60;
   int icon_height = 50;
   int icon_offsetX = bounds.size.w - icon_width;
   int icon_offsetY = bounds.size.h - icon_height;
