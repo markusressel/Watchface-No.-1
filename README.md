@@ -3,6 +3,8 @@ A simple, modular watchface for the Pebble platform.
 
 <img src="/screenshot_2.jpg" width="600">
 
+![Watchface Animation](watchfac_no_1.gif)
+
 # Content
 The watchface currently contains the following layers:
 * Time
