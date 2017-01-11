@@ -25,29 +25,44 @@ WeatherData* weather_get_data() {
   return &weatherData;
 }
 
+static int get_weather_icon_resource_id(char* conditions) {
+  if (strstr(conditions, "Clear")) {
+    return RESOURCE_ID_WEATHER_ICON_SUN;
+  } else if (strstr(conditions, "Clouds")) {
+    return RESOURCE_ID_WEATHER_ICON_CLOUDS;
+  } else if (strstr(conditions, "Rain")) {
+    return RESOURCE_ID_WEATHER_ICON_RAIN;
+  } else if (strstr(conditions, "Thunderstorm")) {
+    return RESOURCE_ID_WEATHER_ICON_THUNDERSTORM;
+  } else if (strstr(conditions, "Snow")) {
+    return RESOURCE_ID_WEATHER_ICON_SNOW;
+  } else if (strstr(conditions, "Atmosphere")) {
+    return RESOURCE_ID_WEATHER_ICON_FOG;
+  } else if (strstr(conditions, "Extreme")) {
+    return RESOURCE_ID_WEATHER_ICON_TORNADO;
+  } else {
+    return 0;
+  }
+}
+
 void update_weather(){
   // Write the current temperature into a buffer
   snprintf(s_buffer, sizeof(s_buffer), "%d°C\n%s", weatherData.CurrentTemperature, weatherData.CurrentConditions);
   // update text layer
   text_layer_set_text(s_weather_layer, s_buffer);
   
-  // find image matching confition
-  // TODO:
-  int resourceId;
-  if (strstr(weatherData.CurrentConditions, "Clear")) {
-    resourceId = RESOURCE_ID_WEATHER_ICON_SUN;
-  } else if (strstr(weatherData.CurrentConditions, "Clouds")) {
-    resourceId = RESOURCE_ID_WEATHER_ICON_CLOUDS;
-  } else {
-    resourceId = RESOURCE_ID_WEATHER_ICON_RAIN;
-  }
+  // find image matching condition
+  int resourceId = get_weather_icon_resource_id(weatherData.CurrentConditions);
   
   // free any previous loaded image
   if (s_weather_icon) {
     gbitmap_destroy(s_weather_icon);
   }
-  // set new image
-  s_weather_icon = gbitmap_create_with_resource(resourceId);
+  
+  if (resourceId != 0) {
+    // set new image
+    s_weather_icon = gbitmap_create_with_resource(resourceId);
+  } 
   
   // update bitmap layer
   bitmap_layer_set_bitmap(s_weather_icon_layer, s_weather_icon);
@@ -62,11 +77,9 @@ void create_weather_layer(Window *window){
   GRect icon_bounds = GRect(5, bounds.size.h - 30 - 5, 30, 30);
   
   // Bitmap
-  s_weather_icon = gbitmap_create_with_resource(RESOURCE_ID_WEATHER_ICON_SUN);
   s_weather_icon_layer = bitmap_layer_create(icon_bounds);
   bitmap_layer_set_compositing_mode(s_weather_icon_layer, GCompOpSet);
-  bitmap_layer_set_bitmap(s_weather_icon_layer, s_weather_icon);
-  bitmap_layer_set_background_color(s_weather_icon_layer,GColorWhite); // use fixed colors, the layer will be inverted if dark theme is set
+  bitmap_layer_set_background_color(s_weather_icon_layer, GColorWhite); // use fixed colors, the layer will be inverted if dark theme is set
   
   s_settings = clay_get_settings();
   

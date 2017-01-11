@@ -30,6 +30,30 @@
         "resources": {
             "media": [
                 {
+                    "file": "images/sw-30.png",
+                    "name": "WEATHER_ICON_TORNADO",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/sw-10.png",
+                    "name": "WEATHER_ICON_FOG",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/sw-25.png",
+                    "name": "WEATHER_ICON_SNOW",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/sw-27.png",
+                    "name": "WEATHER_ICON_THUNDERSTORM",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/sw-22.png",
                     "name": "WEATHER_ICON_RAIN",
                     "targetPlatforms": null,
