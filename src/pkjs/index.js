@@ -19,6 +19,12 @@ Pebble.addEventListener('ready',
 Pebble.addEventListener('appmessage',
   function(e) {
     console.log("AppMessage received!");
+    
+    // Get the dictionary from the message
+    var dict = e.payload;
+
+    console.log('Got message: ' + JSON.stringify(dict));
+    
     weather.getWeather();
   }                     
 );

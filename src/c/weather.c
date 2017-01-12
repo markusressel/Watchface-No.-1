@@ -9,6 +9,11 @@ WeatherData weatherData;
 
 static ClaySettings *s_settings;
 
+// Timer to update weather after given amount of time
+static int s_weather_update_interval = 1800000;
+//static int s_weather_update_interval = 5000;
+static AppTimer *s_update_timer;
+
 // Weather TextLayer
 static TextLayer *s_weather_layer;
 
@@ -42,7 +47,23 @@ static int get_weather_icon_resource_id(char* conditions) {
   }
 }
 
+void on_scheduled_update_triggered() {
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "scheduled weather update triggered!");
+  
+  if (s_update_timer) {
+    // cancel weather update timer
+    app_timer_cancel(s_update_timer);
+  }
+  
+  // TODO: send AppMessage to trigger weather update via JS
+  
+  //Register next execution
+  s_update_timer = app_timer_register(s_weather_update_interval, (AppTimerCallback) on_scheduled_update_triggered, NULL);
+}
+
 void update_weather(){
+  APP_LOG(APP_LOG_LEVEL_DEBUG, "updating weather with new data");
+  
   // Write the current temperature into a buffer
   snprintf(s_buffer, sizeof(s_buffer), "%d°C\n%s", weatherData.CurrentTemperature, weatherData.CurrentConditions);
   // update text layer
@@ -99,11 +120,18 @@ void create_weather_layer(Window *window){
   text_layer_set_text_alignment(s_weather_layer, GTextAlignmentLeft);
   text_layer_set_text(s_weather_layer, "---");
   
+  s_update_timer = app_timer_register(s_weather_update_interval, (AppTimerCallback) on_scheduled_update_triggered, NULL);
+  
   layer_add_child(window_layer, bitmap_layer_get_layer(s_weather_icon_layer));
   layer_add_child(window_layer, text_layer_get_layer(s_weather_layer));
 }
 
 void destroy_weather_layer(){
+  if (s_update_timer) {
+    // cancel weather update timer
+    app_timer_cancel(s_update_timer);
+  }
+  
   // destroy current weather icon
   gbitmap_destroy(s_weather_icon);
   

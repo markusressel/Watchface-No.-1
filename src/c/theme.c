@@ -7,6 +7,7 @@ static enum ThemeEnum currentTheme;
 static void set_fonts(bool showSeconds) {
   s_theme.DateFont = fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD);
   if (showSeconds) {
+    //s_theme.TimeFont = fonts_get_system_font(FONT_KEY_LECO_32_BOLD_NUMBERS);
     s_theme.TimeFont = fonts_get_system_font(FONT_KEY_BITHAM_34_MEDIUM_NUMBERS);
   } else {
     //s_theme.TimeFont = fonts_get_system_font(FONT_KEY_LECO_42_NUMBERS);
