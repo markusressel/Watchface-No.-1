@@ -37,12 +37,6 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     s_settings->TextColor = text_color;
   }
   
-  Tuple *text_color_inverted_t = dict_find(iterator, MESSAGE_KEY_TextColorInverted);
-  if(text_color_inverted_t) {
-    GColor text_color_inverted = GColorFromHEX(text_color_inverted_t->value->int32);
-    s_settings->TextColorInverted = text_color_inverted;
-  }
-  
   // Time Layer Colors
   Tuple *text_color_time_t = dict_find(iterator, MESSAGE_KEY_TimeTextColor);
   if(text_color_time_t) {

@@ -15,7 +15,6 @@ typedef struct Theme {
   GColor BackgroundColor;
   GColor ForegroundColor;
   GColor TextColor;
-  GColor TextColorInverted;
   
   // Time Layer
   GColor TimeTextColor;
@@ -38,6 +37,7 @@ typedef struct Theme {
   
   // Heartrate layer
   GColor HeartIconColor;
+  GColor HeartrateTextColor;
   
   // Fonts
   GFont TimeFont;

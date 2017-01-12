@@ -112,7 +112,6 @@ static void init() {
     custom_theme.BackgroundColor = s_settings->BackgroundColor;
     custom_theme.ForegroundColor = s_settings->ForegroundColor;
     custom_theme.TextColor = s_settings->TextColor;
-    custom_theme.TextColorInverted = s_settings->TextColorInverted;
     
     // Time Layer
     custom_theme.TimeTextColor = s_settings->TimeTextColor;
@@ -135,6 +134,7 @@ static void init() {
     
     // Heartrate Layer
     custom_theme.HeartIconColor = s_settings->HeartIconColor;
+    custom_theme.HeartrateTextColor = s_settings->HeartrateTextColor;
     
     init_custom_theme(custom_theme);
   } else {

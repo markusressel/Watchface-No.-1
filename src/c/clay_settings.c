@@ -9,7 +9,6 @@ static void clay_default_settings() {
   settings.BackgroundColor = GColorWhite;
   settings.ForegroundColor = GColorBlack;
   settings.TextColor = GColorBlack;
-  settings.TextColorInverted = GColorWhite;
   
   // Time Layer
   settings.TimeTextColor = settings.TextColor;
@@ -33,6 +32,7 @@ static void clay_default_settings() {
   #else
     settings.HeartIconColor = settings.ForegroundColor;
   #endif
+    settings.HeartrateTextColor = settings.TextColor;
   
   settings.ShowSeconds = false;
   settings.ShowAnimations = true;

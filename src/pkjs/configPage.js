@@ -142,6 +142,12 @@ module.exports = [
         "messageKey": "HeartColor",
         "defaultValue": "0xFF0000",
         "label": "Heart Color"
+      },
+      {
+        "type": "color",
+        "messageKey": "HeartrateTextColor",
+        "defaultValue": "0xFFFFFF",
+        "label": "BPM Text Color"
       }
     ]
   },

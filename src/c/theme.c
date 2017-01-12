@@ -17,7 +17,6 @@ static void set_colors() {
   switch (currentTheme) {
     case LIGHT:
       s_theme.TextColor = GColorBlack;
-      s_theme.TextColorInverted = GColorWhite;
       s_theme.BackgroundColor = GColorWhite;
       s_theme.ForegroundColor = GColorBlack;
     
@@ -25,7 +24,6 @@ static void set_colors() {
     case DARK:
     default:
       s_theme.TextColor = GColorWhite;
-      s_theme.TextColorInverted = GColorBlack;
       s_theme.BackgroundColor = GColorBlack;
       s_theme.ForegroundColor = GColorWhite;
       break;
@@ -51,11 +49,8 @@ static void set_colors() {
   s_theme.WeatherTextColor = s_theme.TextColor;
 
   // Heartrate Layer
-  #ifdef PBL_COLOR
-    s_theme.HeartIconColor = GColorRed;
-  #else
-    s_theme.HeartIconColor = s_theme.ForegroundColor;
-  #endif
+  s_theme.HeartIconColor = s_theme.ForegroundColor;
+  s_theme.HeartrateTextColor = s_theme.BackgroundColor;
 }
 
 Theme* theme_get_theme(){

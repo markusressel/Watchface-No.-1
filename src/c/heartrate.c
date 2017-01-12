@@ -253,7 +253,7 @@ void create_heartrate_layer(Window *window) {
   
   // set styling
   text_layer_set_background_color(s_heartrate_layer, GColorClear);
-  text_layer_set_text_color(s_heartrate_layer, theme_get_theme()->TextColorInverted);
+  text_layer_set_text_color(s_heartrate_layer, theme_get_theme()->HeartrateTextColor);
   text_layer_set_font(s_heartrate_layer, theme_get_theme()->HeartrateFont);
   text_layer_set_text_alignment(s_heartrate_layer, GTextAlignmentCenter);
 
