@@ -5,13 +5,13 @@
 
 static char s_buffer[32];
 
-WeatherData weatherData;
+static WeatherData weatherData;
 
 static ClaySettings *s_settings;
 
 // Timer to update weather after given amount of time
 static int s_weather_update_interval = 1800000;
-//static int s_weather_update_interval = 5000;
+//static int s_weather_update_interval = 30000;
 static AppTimer *s_update_timer;
 
 // Weather TextLayer
@@ -47,7 +47,35 @@ static int get_weather_icon_resource_id(char* conditions) {
   }
 }
 
-void on_scheduled_update_triggered() {
+static void request_weather_update() {
+  // Declare the dictionary's iterator
+  DictionaryIterator *out_iter;
+
+  // Prepare the outbox buffer for this message
+  AppMessageResult result = app_message_outbox_begin(&out_iter);
+  if(result != APP_MSG_OK) {
+    // The outbox cannot be used right now
+    APP_LOG(APP_LOG_LEVEL_ERROR, "Error preparing the outbox: %d", (int)result);
+    return;
+  }
+  
+  // Construct the message with a dummy value
+  int value = 0;
+  // Add an item to ask for weather data
+  dict_write_int(out_iter, MESSAGE_KEY_RequestData, &value, sizeof(int), true);
+  
+  APP_LOG(APP_LOG_LEVEL_ERROR, "Sending RequestUpdate message for weather...");
+  
+  // Send this message
+  result = app_message_outbox_send();
+
+  // Check the result
+  if(result != APP_MSG_OK) {
+    APP_LOG(APP_LOG_LEVEL_ERROR, "Error sending the outbox: %d", (int)result);
+  }
+}
+
+static void on_scheduled_update_triggered() {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "scheduled weather update triggered!");
   
   if (s_update_timer) {
@@ -55,7 +83,8 @@ void on_scheduled_update_triggered() {
     app_timer_cancel(s_update_timer);
   }
   
-  // TODO: send AppMessage to trigger weather update via JS
+  // send AppMessage to trigger weather update via JS
+  request_weather_update();
   
   //Register next execution
   s_update_timer = app_timer_register(s_weather_update_interval, (AppTimerCallback) on_scheduled_update_triggered, NULL);

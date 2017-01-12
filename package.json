@@ -34,7 +34,8 @@
             "WeatherTextColor",
             "BatteryTextColor",
             "ConnectionIconColor",
-            "HeartrateTextColor"
+            "HeartrateTextColor",
+            "RequestData"
         ],
         "projectType": "native",
         "resources": {
