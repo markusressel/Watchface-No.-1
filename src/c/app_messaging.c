@@ -62,6 +62,12 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     GColor text_color_inverted = GColorFromHEX(text_color_inverted_t->value->int32);
     s_settings->TextColorInverted = text_color_inverted;
   }
+  
+  Tuple *heart_icon_color_t = dict_find(iterator, MESSAGE_KEY_HeartColor);
+  if(heart_icon_color_t) {
+    GColor heart_icon_color = GColorFromHEX(heart_icon_color_t->value->int32);
+    s_settings->HeartIconColor = heart_icon_color;
+  }
 
   // Read boolean preferences
   Tuple *show_seconds_t = dict_find(iterator, MESSAGE_KEY_ShowSeconds);

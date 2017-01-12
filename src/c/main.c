@@ -107,7 +107,15 @@ static void init() {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "initializing theme");
   // initialize theme based on ThemeEnum
   if (theme == CUSTOM) {
-    init_custom_theme(s_settings->BackgroundColor, s_settings->ForegroundColor, s_settings->TextColor, s_settings->TextColorInverted);
+    Theme custom_theme;
+    custom_theme.BackgroundColor = s_settings->BackgroundColor;
+    custom_theme.ForegroundColor = s_settings->ForegroundColor;
+    custom_theme.TextColor = s_settings->TextColor;
+    custom_theme.TextColorInverted = s_settings->TextColorInverted;
+    
+    custom_theme.HeartIconColor = s_settings->HeartIconColor;
+    
+    init_custom_theme(custom_theme);
   } else {
     init_theme(theme);
   }

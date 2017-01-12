@@ -1,10 +1,10 @@
 #include <pebble.h>
 #include "heartrate.h"
 #include "health_listener.h"
-#include <pebble-effect-layer/pebble-effect-layer.h>
 #include <pebble-gbitmap-lib/gbitmap_tools.h>
 #include "clay_settings.h"
 #include "theme.h"
+#include "gbitmap_color_palette_manipulator.h"
 
 static ClaySettings *s_settings;
 
@@ -18,9 +18,6 @@ static GBitmap *s_resized_heart_icon;
 // Icon layer
 static int s_current_heartrate;
 static Layer *s_heart_icon_layer;
-
-// Effect layer, covering the heart icon to change image color
-static EffectLayer *s_effect_layer;
 
 // number of heartbeat animation images
 #define NB_OF_IMAGES 1
@@ -64,7 +61,6 @@ static void do_resize(int percent){
   }
   s_resized_heart_icon = scaleBitmap(s_heart_icon, percent, percent);
   layer_mark_dirty(s_heart_icon_layer);
-  layer_mark_dirty(effect_layer_get_layer(s_effect_layer));
 }
 
 static void inAnimationUpdate(struct Animation *animation, const AnimationProgress progress){
@@ -98,9 +94,9 @@ static void heart_icon_update_callback(Layer *layer, GContext* ctx) {
   }
   
   // draw background color (for correct color inversion)
-  graphics_context_set_fill_color(ctx, GColorWhite);
+  // graphics_context_set_fill_color(ctx, GColorWhite);
   GRect layer_bounds = layer_get_bounds(layer);
-  graphics_fill_rect(ctx, layer_bounds, 0, GCornerNone);
+  // graphics_fill_rect(ctx, layer_bounds, 0, GCornerNone);
   
   if(s_resized_heart_icon) {
     GRect bounds = gbitmap_get_bounds(s_resized_heart_icon);
@@ -177,6 +173,9 @@ static void update_heart_animation() {
 
 // Method to update the heartrate textbuffer
 void update_heartrate() {
+  // fake heartrate for testing
+  s_heartrate_bpm = 90;
+  
   if (s_current_heartrate != s_heartrate_bpm) {
     APP_LOG(APP_LOG_LEVEL_DEBUG, "heartrate changed: new %d, old: %d", s_heartrate_bpm, s_current_heartrate);
     s_current_heartrate = s_heartrate_bpm;
@@ -225,7 +224,7 @@ void create_heartrate_layer(Window *window) {
   
   s_settings = clay_get_settings();
   
-  int icon_width = 60;
+  int icon_width = 50;
   int icon_height = 50;
   int icon_offsetX = bounds.size.w - icon_width;
   int icon_offsetY = bounds.size.h - icon_height;
@@ -234,20 +233,16 @@ void create_heartrate_layer(Window *window) {
   
   // load heart icon
   s_heart_icon = gbitmap_create_with_resource(RESOURCE_ID_HEARTRATE_ICON_HEART_FILLED);
+//  #ifdef PBL_COLOR
+  replace_gbitmap_color(GColorBlack, theme_get_theme()->HeartIconColor, s_heart_icon, NULL);
+  //replace_gbitmap_color(GColorBlack, GColorRed, s_heart_icon, NULL);
+//  #endif
   
   s_heart_icon_layer = layer_create(icon_bounds);
   layer_set_update_proc(s_heart_icon_layer, heart_icon_update_callback);
   
   // initialize animation
   initialize_heart_animation();
-  
-  // Create effect layer
-  s_effect_layer = effect_layer_create(icon_bounds);
-  
-  if (theme_get_theme()->CurrentThemeEnum == DARK) {
-    // add color inversion effect
-    effect_layer_add_effect(s_effect_layer, effect_invert, NULL);
-  }
   
   int width = 50;
   int height = 20;
@@ -271,7 +266,6 @@ void create_heartrate_layer(Window *window) {
   
   // Add it as a child layer to the Window's root layer
   layer_add_child(window_layer, s_heart_icon_layer);
-  layer_add_child(window_layer, effect_layer_get_layer(s_effect_layer)); // add here to only affect icon
   layer_add_child(window_layer, text_layer_get_layer(s_heartrate_layer));
 }
 
@@ -288,7 +282,6 @@ void destroy_heartrate_layer() {
   
   // destroy layers
   layer_destroy(s_heart_icon_layer);
-  effect_layer_destroy(s_effect_layer);
   text_layer_destroy(s_heartrate_layer);
   
   // destroy animation related data

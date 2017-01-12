@@ -11,11 +11,26 @@ enum ThemeEnum {
 typedef struct Theme {
   enum ThemeEnum CurrentThemeEnum;
   
+  // General Colors
   GColor BackgroundColor;
   GColor ForegroundColor;
   GColor TextColor;
   GColor TextColorInverted;
   
+  // Connection Layer
+  GColor ConnectionIconColor;
+    
+  // Battery Layer
+  GColor BatteryOutlinecolor;
+  GColor BatteryFillColor;
+  
+  // Weather Layer
+  GColor WeatherIconColor;
+  
+  // Heartrate layer
+  GColor HeartIconColor;
+  
+  // Fonts
   GFont TimeFont;
   GFont DateFont;
   GFont BatteryFont;
@@ -30,4 +45,4 @@ Theme* theme_get_theme();
 void init_theme(enum ThemeEnum theme);
 
 // method to initlalize custom theme with custom colors
-void init_custom_theme(GColor backgroundColor, GColor foregroundColor, GColor textColor, GColor textColorInverted);
+void init_custom_theme(Theme theme);

@@ -10,6 +10,9 @@ typedef struct ClaySettings {
   GColor TextColor;
   GColor TextColorInverted;
   
+  // Heartrate Layer
+  GColor HeartIconColor;
+  
   char ThemeValue[10];
   
   bool ShowSeconds;

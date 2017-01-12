@@ -48,6 +48,10 @@ module.exports = [
         "defaultValue": "These values will only have effect if you have selected \"Custom\" Theme in the section above."
       },
       {
+        "type": "text",
+        "defaultValue": "General"
+      },
+      {
         "type": "color",
         "messageKey": "BackgroundColor",
         "defaultValue": "0x000000",
@@ -64,6 +68,48 @@ module.exports = [
         "messageKey": "TextColor",
         "defaultValue": "0xFFFFFF",
         "label": "Text Color"
+      },
+      {
+        "type": "text",
+        "defaultValue": "Time & Date"
+      },
+      {
+        "type": "color",
+        "messageKey": "TimeTextColor",
+        "defaultValue": "0xFFFFFF",
+        "label": "Time Color"
+      },
+      {
+        "type": "color",
+        "messageKey": "DateTextColor",
+        "defaultValue": "0xFFFFFF",
+        "label": "Date Color"
+      },
+      {
+        "type": "text",
+        "defaultValue": "Battery"
+      },
+      {
+        "type": "color",
+        "messageKey": "BatteryFrameColor",
+        "defaultValue": "0xFFFFFF",
+        "label": "Battery Frame Color"
+      },
+      {
+        "type": "color",
+        "messageKey": "BatteryFillColor",
+        "defaultValue": "0xFFFFFF",
+        "label": "Battery Fill Color"
+      },
+      {
+        "type": "text",
+        "defaultValue": "Heartrate"
+      },
+      {
+        "type": "color",
+        "messageKey": "HeartColor",
+        "defaultValue": "0xFF0000",
+        "label": "Heart Color"
       }
     ]
   },

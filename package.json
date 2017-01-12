@@ -24,7 +24,13 @@
             "ShowSeconds",
             "ShowAnimations",
             "Theme",
-            "TextColorInverted"
+            "TextColorInverted",
+            "HeartColor",
+            "TimeTextColor",
+            "BatteryFillColor",
+            "BatteryFrameColor",
+            "DateTextColor",
+            "TimeTextColor"
         ],
         "projectType": "native",
         "resources": {

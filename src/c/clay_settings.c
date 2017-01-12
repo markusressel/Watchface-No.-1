@@ -11,6 +11,9 @@ static void clay_default_settings() {
   settings.TextColor = GColorBlack;
   settings.TextColorInverted = GColorWhite;
   
+  // Heartrate layer
+  settings.HeartIconColor = GColorBlack;
+  
   settings.ShowSeconds = false;
   settings.ShowAnimations = true;
   strcpy(settings.ThemeValue, "DARK");
