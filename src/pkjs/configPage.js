@@ -87,6 +87,16 @@ module.exports = [
       },
       {
         "type": "text",
+        "defaultValue": "Connection Indicator"
+      },
+      {
+        "type": "color",
+        "messageKey": "ConnectionIconColor",
+        "defaultValue": "0xFFFFFF",
+        "label": "Connection Icon Color"
+      },
+      {
+        "type": "text",
         "defaultValue": "Battery"
       },
       {
@@ -100,6 +110,28 @@ module.exports = [
         "messageKey": "BatteryFillColor",
         "defaultValue": "0xFFFFFF",
         "label": "Battery Fill Color"
+      },
+      {
+        "type": "color",
+        "messageKey": "BatteryTextColor",
+        "defaultValue": "0xFFFFFF",
+        "label": "Battery Text Color"
+      },
+      {
+        "type": "text",
+        "defaultValue": "Weather"
+      },
+      {
+        "type": "color",
+        "messageKey": "WeatherIconColor",
+        "defaultValue": "0xFFFFFF",
+        "label": "Weather Icon Color"
+      },
+      {
+        "type": "color",
+        "messageKey": "WeatherTextColor",
+        "defaultValue": "0xFFFFFF",
+        "label": "Weather Text Color"
       },
       {
         "type": "text",

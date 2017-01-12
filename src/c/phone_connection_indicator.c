@@ -1,10 +1,10 @@
 #include <pebble.h>
 #include "phone_connection_indicator.h"
 #include "system_event_listener.h"
-#include <pebble-effect-layer/pebble-effect-layer.h>
 #include <pebble-gbitmap-lib/gbitmap_tools.h>
 #include "clay_settings.h"
 #include "theme.h"
+#include "gbitmap_color_palette_manipulator.h"
 
 static ClaySettings *s_settings;
 
@@ -13,16 +13,8 @@ static Layer *s_phone_connection_indicator_layer;
 
 static GBitmap *s_connection_icon;
 
-// Effect layer, covering the icon to change image color
-static EffectLayer *s_effect_layer;
-
 static void phone_connection_indicator_update_proc(Layer *layer, GContext *ctx) {
   GRect layer_bounds = layer_get_bounds(layer);
-  
-  // draw background color (for correct color inversion)
-  graphics_context_set_fill_color(ctx, GColorWhite);
-  GRect bounds = layer_get_bounds(layer);
-  graphics_fill_rect(ctx, bounds, 0, GCornerNone);
   
   if (s_connection_icon) {
     // Set the compositing mode (GCompOpSet is required for transparency)
@@ -44,7 +36,7 @@ static void phone_connection_indicator_update_proc(Layer *layer, GContext *ctx) 
   }
   
   if (!is_phone_app_connected) {
-    graphics_context_set_stroke_color(ctx, GColorBlack);
+    graphics_context_set_stroke_color(ctx, GColorRed);
     graphics_context_set_stroke_width(ctx, 5);
     
     // draw cross over icon
@@ -78,16 +70,8 @@ void create_phone_connection_indicator_layer(Window *window) {
   layer_set_update_proc(s_phone_connection_indicator_layer, phone_connection_indicator_update_proc);  
   
   s_connection_icon = gbitmap_create_with_resource(RESOURCE_ID_PHONE_CONNECTION_ICON);
+  replace_gbitmap_color(GColorBlack, theme_get_theme()->ConnectionIconColor, s_connection_icon, NULL);
   s_connection_icon = scaleBitmap(s_connection_icon, 40, 40);
-  
-  // Create effect layer
-  s_effect_layer = effect_layer_create(layer_bounds);
-  
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "checking ThemeValue");
-  if (theme_get_theme()->CurrentThemeEnum == DARK) {
-    // add color inversion effect
-    effect_layer_add_effect(s_effect_layer, effect_invert, NULL);
-  }
   
   APP_LOG(APP_LOG_LEVEL_DEBUG, "updating indicator");
   // force update
@@ -96,7 +80,6 @@ void create_phone_connection_indicator_layer(Window *window) {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "adding to parent");
   // Add to Window
   layer_add_child(window_get_root_layer(window), s_phone_connection_indicator_layer);
-  layer_add_child(window_layer, effect_layer_get_layer(s_effect_layer));
 }
 
 // destroy the layer
@@ -106,6 +89,5 @@ void destroy_phone_connection_indicator_layer() {
     gbitmap_destroy(s_connection_icon);
   }
   
-  effect_layer_destroy(s_effect_layer);
   layer_destroy(s_phone_connection_indicator_layer);
 }

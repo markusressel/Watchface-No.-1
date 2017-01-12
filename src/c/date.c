@@ -44,7 +44,7 @@ void create_date_layer(Window *window) {
   
   // Improve the layout to be more like a watchface
   text_layer_set_background_color(s_date_layer, theme_get_theme()->BackgroundColor);
-  text_layer_set_text_color(s_date_layer, theme_get_theme()->TextColor);
+  text_layer_set_text_color(s_date_layer, theme_get_theme()->DateTextColor);
   text_layer_set_font(s_date_layer, theme_get_theme()->DateFont);
   text_layer_set_text_alignment(s_date_layer, GTextAlignmentCenter);
   

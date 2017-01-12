@@ -30,7 +30,10 @@
             "BatteryFillColor",
             "BatteryFrameColor",
             "DateTextColor",
-            "TimeTextColor"
+            "WeatherIconColor",
+            "WeatherTextColor",
+            "BatteryTextColor",
+            "ConnectionIconColor"
         ],
         "projectType": "native",
         "resources": {

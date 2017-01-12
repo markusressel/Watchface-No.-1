@@ -93,10 +93,7 @@ static void heart_icon_update_callback(Layer *layer, GContext* ctx) {
                                        s_heartbeat_icon_animation_scale_big);;
   }
   
-  // draw background color (for correct color inversion)
-  // graphics_context_set_fill_color(ctx, GColorWhite);
   GRect layer_bounds = layer_get_bounds(layer);
-  // graphics_fill_rect(ctx, layer_bounds, 0, GCornerNone);
   
   if(s_resized_heart_icon) {
     GRect bounds = gbitmap_get_bounds(s_resized_heart_icon);

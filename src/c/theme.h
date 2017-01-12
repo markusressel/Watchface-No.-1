@@ -17,15 +17,24 @@ typedef struct Theme {
   GColor TextColor;
   GColor TextColorInverted;
   
+  // Time Layer
+  GColor TimeTextColor;
+  // Date Layer
+  GColor DateTextColor;
+  
   // Connection Layer
   GColor ConnectionIconColor;
     
-  // Battery Layer
-  GColor BatteryOutlinecolor;
+  // Battery Bar Layer
+  GColor BatteryOutlineColor;
   GColor BatteryFillColor;
+  
+  // Battery Text Layer
+  GColor BatteryTextColor;
   
   // Weather Layer
   GColor WeatherIconColor;
+  GColor WeatherTextColor;
   
   // Heartrate layer
   GColor HeartIconColor;

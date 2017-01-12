@@ -51,7 +51,7 @@ void create_time_layer(Window *window) {
   
   // set styling
   text_layer_set_background_color(s_time_layer, theme_get_theme()->BackgroundColor);
-  text_layer_set_text_color(s_time_layer, theme_get_theme()->TextColor);
+  text_layer_set_text_color(s_time_layer, theme_get_theme()->TimeTextColor);
   text_layer_set_font(s_time_layer, theme_get_theme()->TimeFont);
   text_layer_set_text_alignment(s_time_layer, GTextAlignmentCenter);
   

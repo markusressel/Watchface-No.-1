@@ -107,12 +107,33 @@ static void init() {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "initializing theme");
   // initialize theme based on ThemeEnum
   if (theme == CUSTOM) {
+    APP_LOG(APP_LOG_LEVEL_DEBUG, "init custom theme");
     Theme custom_theme;
     custom_theme.BackgroundColor = s_settings->BackgroundColor;
     custom_theme.ForegroundColor = s_settings->ForegroundColor;
     custom_theme.TextColor = s_settings->TextColor;
     custom_theme.TextColorInverted = s_settings->TextColorInverted;
     
+    // Time Layer
+    custom_theme.TimeTextColor = s_settings->TimeTextColor;
+    // Date Layer
+    custom_theme.DateTextColor = s_settings->DateTextColor;
+    
+    // Connection Layer
+    custom_theme.ConnectionIconColor = s_settings->ConnectionIconColor;
+    
+    // Battery Bar Layer
+    custom_theme.BatteryOutlineColor = s_settings->BatteryFrameColor;
+    custom_theme.BatteryFillColor = s_settings->BatteryFillColor;
+    
+    // Battery Text Layer
+    custom_theme.BatteryTextColor = s_settings->BatteryTextColor;
+    
+    // Weather Layer
+    custom_theme.WeatherIconColor = s_settings->WeatherIconColor;
+    custom_theme.WeatherTextColor = s_settings->WeatherTextColor;
+    
+    // Heartrate Layer
     custom_theme.HeartIconColor = s_settings->HeartIconColor;
     
     init_custom_theme(custom_theme);

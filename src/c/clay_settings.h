@@ -10,6 +10,26 @@ typedef struct ClaySettings {
   GColor TextColor;
   GColor TextColorInverted;
   
+  // Time Layer
+  GColor TimeTextColor;
+  
+  // Date Layer
+  GColor DateTextColor;
+  
+  // Connection Layer
+  GColor ConnectionIconColor;
+  
+  // Battery Bar Layer
+  GColor BatteryFrameColor;
+  GColor BatteryFillColor;
+  
+  // Battery Text Layer
+  GColor BatteryTextColor;
+  
+  // Weather Layer
+  GColor WeatherIconColor;
+  GColor WeatherTextColor;
+  
   // Heartrate Layer
   GColor HeartIconColor;
   

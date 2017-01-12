@@ -20,6 +20,7 @@ static void set_colors() {
       s_theme.TextColorInverted = GColorWhite;
       s_theme.BackgroundColor = GColorWhite;
       s_theme.ForegroundColor = GColorBlack;
+    
       break;
     case DARK:
     default:
@@ -28,8 +29,28 @@ static void set_colors() {
       s_theme.BackgroundColor = GColorBlack;
       s_theme.ForegroundColor = GColorWhite;
       break;
-  } 
+  }
   
+  // Time Layer
+  s_theme.TimeTextColor = s_theme.TextColor;
+  // Date Layer
+  s_theme.DateTextColor = s_theme.TextColor;
+
+  // Connection Layer
+  s_theme.ConnectionIconColor = s_theme.ForegroundColor;
+
+  // Battery Bar Layer
+  s_theme.BatteryOutlineColor = s_theme.ForegroundColor;
+  s_theme.BatteryFillColor = s_theme.ForegroundColor;
+
+  // Battery Text Layer
+  s_theme.BatteryTextColor = s_theme.TextColor;
+
+  // Weather Layer
+  s_theme.WeatherIconColor = s_theme.ForegroundColor;
+  s_theme.WeatherTextColor = s_theme.TextColor;
+
+  // Heartrate Layer
   #ifdef PBL_COLOR
     s_theme.HeartIconColor = GColorRed;
   #else
@@ -52,10 +73,10 @@ void init_theme(enum ThemeEnum themeEnum) {
 void init_custom_theme(Theme theme) {
   s_theme = theme;
   
-  /*
-  theme.CurrentThemeEnum = CUSTOM;
+  s_theme.CurrentThemeEnum = CUSTOM;
   currentTheme = CUSTOM;
   
+  /*
   theme.BackgroundColor = backgroundColor;
   theme.ForegroundColor = foregroundColor;
   theme.TextColor = textColor;

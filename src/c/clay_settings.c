@@ -11,8 +11,28 @@ static void clay_default_settings() {
   settings.TextColor = GColorBlack;
   settings.TextColorInverted = GColorWhite;
   
+  // Time Layer
+  settings.TimeTextColor = settings.TextColor;
+  // Date Layer
+  settings.DateTextColor = settings.TextColor;
+  
+  // Battery Bar Layer
+  settings.BatteryFrameColor = settings.ForegroundColor;
+  settings.BatteryFillColor = settings.ForegroundColor;
+  
+  // Battery Text Layer
+  settings.BatteryTextColor = settings.TextColor;
+  
+  // Weather Layer
+  settings.WeatherIconColor = settings.ForegroundColor;
+  settings.WeatherTextColor = settings.TextColor;
+  
   // Heartrate layer
-  settings.HeartIconColor = GColorBlack;
+  #ifdef PBL_COLOR
+    settings.HeartIconColor = GColorRed;
+  #else
+    settings.HeartIconColor = settings.ForegroundColor;
+  #endif
   
   settings.ShowSeconds = false;
   settings.ShowAnimations = true;

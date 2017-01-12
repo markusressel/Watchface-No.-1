@@ -14,27 +14,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   Tuple *theme_t = dict_find(iterator, MESSAGE_KEY_Theme);
   if(theme_t) {
     char *theme = theme_t->value->cstring;
-    
-    //if (strcmp(theme, "DARK") == 0) {
-    //  s_settings->ThemeValue = "DARK";
-    //} else if (strcmp(theme, "CUSTOM") == 0) {
-    //  strcpy(settings->ThemeValue, "CUSTOM");
-   //   s_settings->ThemeValue = "CUSTOM";
-   // } else {
-    //  s_settings->ThemeValue = "LIGHT";
-    //}
-    
-    //if (strcmp(theme, "DARK") == 0) {
-    //  strcpy(s_settings->ThemeValue, "DARK");
-    //} else if (strcmp(theme, "CUSTOM") == 0) {
-    //  strcpy(s_settings->ThemeValue, "CUSTOM");
-    //} else {
-    //  strcpy(s_settings->ThemeValue, "LIGHT");
-    //}
-    
     strcpy(s_settings->ThemeValue, theme);
-    
-    // s_settings->ThemeValue = theme;
   }
   
   // Read color preferences
@@ -63,6 +43,61 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     s_settings->TextColorInverted = text_color_inverted;
   }
   
+  // Time Layer Colors
+  Tuple *text_color_time_t = dict_find(iterator, MESSAGE_KEY_TimeTextColor);
+  if(text_color_time_t) {
+    GColor text_color_time = GColorFromHEX(text_color_time_t->value->int32);
+    s_settings->TimeTextColor = text_color_time;
+  }
+  
+  // Date Layer Colors
+  Tuple *text_color_date_t = dict_find(iterator, MESSAGE_KEY_DateTextColor);
+  if(text_color_date_t) {
+    GColor text_color_date = GColorFromHEX(text_color_date_t->value->int32);
+    s_settings->DateTextColor = text_color_date;
+  }
+  
+  // Connection Layer
+  Tuple *connection_icon_color_t = dict_find(iterator, MESSAGE_KEY_ConnectionIconColor);
+  if(connection_icon_color_t) {
+    GColor connection_icon_color = GColorFromHEX(connection_icon_color_t->value->int32);
+    s_settings->ConnectionIconColor = connection_icon_color;
+  }
+  
+  // Battery Bar Layer Colors
+  Tuple *battery_frame_color_t = dict_find(iterator, MESSAGE_KEY_BatteryFrameColor);
+  if(battery_frame_color_t) {
+    GColor battery_frame_color = GColorFromHEX(battery_frame_color_t->value->int32);
+    s_settings->BatteryFrameColor = battery_frame_color;
+  }
+  
+  Tuple *battery_fill_color_t = dict_find(iterator, MESSAGE_KEY_BatteryFillColor);
+  if(battery_fill_color_t) {
+    GColor battery_fill_color = GColorFromHEX(battery_fill_color_t->value->int32);
+    s_settings->BatteryFillColor = battery_fill_color;
+  }
+  
+  // Battery Text Layer Colors
+  Tuple *battery_text_color_t = dict_find(iterator, MESSAGE_KEY_BatteryTextColor);
+  if(battery_text_color_t) {
+    GColor battery_text_color = GColorFromHEX(battery_text_color_t->value->int32);
+    s_settings->BatteryTextColor = battery_text_color;
+  }
+  
+  // Weather Layer Colors
+  Tuple *weather_icon_color_t = dict_find(iterator, MESSAGE_KEY_WeatherIconColor);
+  if(weather_icon_color_t) {
+    GColor weather_icon_color = GColorFromHEX(weather_icon_color_t->value->int32);
+    s_settings->WeatherIconColor = weather_icon_color;
+  }
+  
+  Tuple *weather_text_color_t = dict_find(iterator, MESSAGE_KEY_WeatherTextColor);
+  if(weather_text_color_t) {
+    GColor weather_text_color = GColorFromHEX(weather_text_color_t->value->int32);
+    s_settings->WeatherTextColor = weather_text_color;
+  }
+  
+  // Heartrate Layer Colors
   Tuple *heart_icon_color_t = dict_find(iterator, MESSAGE_KEY_HeartColor);
   if(heart_icon_color_t) {
     GColor heart_icon_color = GColorFromHEX(heart_icon_color_t->value->int32);
@@ -108,11 +143,11 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
 }
 
 static void inbox_dropped_callback(AppMessageResult reason, void *context) {
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Message dropped!");
+  APP_LOG(APP_LOG_LEVEL_ERROR, "Message dropped! %d", (int) reason);
 }
 
 static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResult reason, void *context) {
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox send failed!");
+  APP_LOG(APP_LOG_LEVEL_ERROR, "Outbox send failed! %d", (int) reason);
 }
 
 static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
@@ -127,7 +162,7 @@ void initialize_app_messaging() {
   app_message_register_outbox_sent(outbox_sent_callback);
   
   // Open AppMessage
-  const int inbox_size = 128;
-  const int outbox_size = 128;
+  const int inbox_size = 256;
+  const int outbox_size = 256;
   app_message_open(inbox_size, outbox_size);
 }
