@@ -2,6 +2,7 @@
 #include "tick_listener.h"
 #include "time.h"
 #include "date.h"
+#include "clay_settings.h"
 
 static bool registered = false;
 
@@ -20,7 +21,13 @@ void register_tick_listener() {
   
   APP_LOG(APP_LOG_LEVEL_DEBUG, "registering tick listener");
   // Register with TickTimerService
-  tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+  
+  if (clay_get_settings()->ShowSeconds) {
+    tick_timer_service_subscribe(SECOND_UNIT, tick_handler);
+  } else {
+    tick_timer_service_subscribe(MINUTE_UNIT, tick_handler);
+  }
+  
   registered = true;
 }
 

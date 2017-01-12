@@ -6,7 +6,8 @@ static enum ThemeEnum currentTheme;
 
 static void set_fonts() {
   s_theme.DateFont = fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD);
-  s_theme.TimeFont = fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD);
+  //s_theme.TimeFont = fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD);
+  s_theme.TimeFont = fonts_get_system_font(FONT_KEY_BITHAM_34_MEDIUM_NUMBERS);
   //s_theme.TimeFont = fonts_get_system_font(FONT_KEY_LECO_42_NUMBERS);
   s_theme.BatteryFont = fonts_get_system_font(FONT_KEY_GOTHIC_18);
   s_theme.HeartrateFont = fonts_get_system_font(FONT_KEY_GOTHIC_18);

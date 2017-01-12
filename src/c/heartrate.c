@@ -171,7 +171,7 @@ static void update_heart_animation() {
 // Method to update the heartrate textbuffer
 void update_heartrate() {
   // fake heartrate for testing
-  s_heartrate_bpm = 90;
+  // s_heartrate_bpm = 90;
   
   if (s_current_heartrate != s_heartrate_bpm) {
     APP_LOG(APP_LOG_LEVEL_DEBUG, "heartrate changed: new %d, old: %d", s_heartrate_bpm, s_current_heartrate);

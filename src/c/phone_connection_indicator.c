@@ -36,7 +36,11 @@ static void phone_connection_indicator_update_proc(Layer *layer, GContext *ctx) 
   }
   
   if (!is_phone_app_connected) {
-    graphics_context_set_stroke_color(ctx, GColorRed);
+    #ifdef PBL_COLOR      
+      graphics_context_set_stroke_color(ctx, GColorRed);
+    #else
+      graphics_context_set_stroke_color(ctx, theme_get_theme()->ForegroundColor);
+    #endif
     graphics_context_set_stroke_width(ctx, 5);
     
     // draw cross over icon
