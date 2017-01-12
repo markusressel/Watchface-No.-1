@@ -124,7 +124,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
     APP_LOG(APP_LOG_LEVEL_DEBUG, "temp changed: old: %d new: %d",(int)  weatherData->CurrentTemperature, (int)temp_tuple->value->int32);
     
     weatherData->CurrentTemperature = (int)temp_tuple->value->int32;
-    weatherData->CurrentConditions = condition_tuple->value->cstring;
+    strcpy(weatherData->CurrentConditions, condition_tuple->value->cstring);
     
     // snprintf(s_temperature_buffer, sizeof(s_temperature_buffer), "%d°C", (int)temp_tuple->value->int32);
     // snprintf(s_conditions_buffer, sizeof(s_conditions_buffer), "%s", condition_tuple->value->cstring);

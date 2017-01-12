@@ -27,6 +27,16 @@ WeatherData* weather_get_data() {
   return &weatherData;
 }
 
+static void restore_saved_weather_data() {
+  // Read settings from persistent storage, if they exist
+  persist_read_data(WEATHER_DATA_KEY, &weatherData, sizeof(weatherData));
+}
+
+static void save_current_weather_data() {
+  // save WeatherData struct to persistent storage
+  persist_write_data(WEATHER_DATA_KEY, &weatherData, sizeof(weatherData));
+}
+
 static int get_weather_icon_resource_id(char* conditions) {
   if (strstr(conditions, "Clear")) {
     return RESOURCE_ID_WEATHER_ICON_SUN;
@@ -93,6 +103,9 @@ static void on_scheduled_update_triggered() {
 void update_weather(){
   APP_LOG(APP_LOG_LEVEL_DEBUG, "updating weather with new data");
   
+  // persist current data for fast access when opening the watchface
+  save_current_weather_data();
+  
   // Write the current temperature into a buffer
   snprintf(s_buffer, sizeof(s_buffer), "%d°C\n%s", weatherData.CurrentTemperature, weatherData.CurrentConditions);
   // update text layer
@@ -129,7 +142,9 @@ void create_weather_layer(Window *window){
   bitmap_layer_set_compositing_mode(s_weather_icon_layer, GCompOpSet);
   bitmap_layer_set_background_color(s_weather_icon_layer, GColorClear);
   
-  s_settings = clay_get_settings();  
+  s_settings = clay_get_settings();
+  
+  restore_saved_weather_data();
   
   // set bounds and offset for text layer
   int width = 60;
@@ -148,6 +163,8 @@ void create_weather_layer(Window *window){
   text_layer_set_font(s_weather_layer, theme_get_theme()->WeatherFont);
   text_layer_set_text_alignment(s_weather_layer, GTextAlignmentLeft);
   text_layer_set_text(s_weather_layer, "---");
+  
+  update_weather();
   
   s_update_timer = app_timer_register(s_weather_update_interval, (AppTimerCallback) on_scheduled_update_triggered, NULL);
   

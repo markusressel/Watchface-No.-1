@@ -1,17 +1,13 @@
 #pragma once
 #include <pebble.h>
 
-// #ifndef EXTERN
-// #define EXTERN extern
-// #endif
+// Persistent storage key
+#define WEATHER_DATA_KEY 2
 
 typedef struct WeatherData {
   int CurrentTemperature;
-  char* CurrentConditions;
+  char CurrentConditions[32];
 } __attribute__((__packed__)) WeatherData;
-
-// EXTERN int currentTemperature;
-// EXTERN char *currentConditions;
 
 WeatherData* weather_get_data();
 
