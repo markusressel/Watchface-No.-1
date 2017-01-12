@@ -4,11 +4,14 @@
 static Theme s_theme;
 static enum ThemeEnum currentTheme;
 
-static void set_fonts() {
+static void set_fonts(bool showSeconds) {
   s_theme.DateFont = fonts_get_system_font(FONT_KEY_GOTHIC_28_BOLD);
-  //s_theme.TimeFont = fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD);
-  s_theme.TimeFont = fonts_get_system_font(FONT_KEY_BITHAM_34_MEDIUM_NUMBERS);
-  //s_theme.TimeFont = fonts_get_system_font(FONT_KEY_LECO_42_NUMBERS);
+  if (showSeconds) {
+    s_theme.TimeFont = fonts_get_system_font(FONT_KEY_BITHAM_34_MEDIUM_NUMBERS);
+  } else {
+    //s_theme.TimeFont = fonts_get_system_font(FONT_KEY_LECO_42_NUMBERS);
+    s_theme.TimeFont = fonts_get_system_font(FONT_KEY_BITHAM_42_BOLD);
+  }
   s_theme.BatteryFont = fonts_get_system_font(FONT_KEY_GOTHIC_18);
   s_theme.HeartrateFont = fonts_get_system_font(FONT_KEY_GOTHIC_18);
   s_theme.WeatherFont = fonts_get_system_font(FONT_KEY_GOTHIC_18);
@@ -58,15 +61,15 @@ Theme* theme_get_theme(){
   return &s_theme;
 }
 
-void init_theme(enum ThemeEnum themeEnum) {
+void init_theme(enum ThemeEnum themeEnum, bool showSeconds) {
   s_theme.CurrentThemeEnum = themeEnum;
   currentTheme = themeEnum;
   
   set_colors();
-  set_fonts();
+  set_fonts(showSeconds);
 }
 
-void init_custom_theme(Theme theme) {
+void init_custom_theme(Theme theme, bool showSeconds) {
   s_theme = theme;
   
   s_theme.CurrentThemeEnum = CUSTOM;
@@ -81,5 +84,5 @@ void init_custom_theme(Theme theme) {
   theme.HeartIconColor = ;
   */
   
-  set_fonts();
+  set_fonts(showSeconds);
 }

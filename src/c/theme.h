@@ -51,7 +51,12 @@ typedef struct Theme {
 Theme* theme_get_theme();
 
 // method to set application theme
-void init_theme(enum ThemeEnum theme);
+// @param theme        one of the ThemeEnum values DARK, LIGHT
+//                     if you want to set a custom theme use init_custom_theme();
+// @param showSeconds  specifies if the time shows seconds (to properly select font size)
+void init_theme(enum ThemeEnum theme, bool showSeconds);
 
 // method to initlalize custom theme with custom colors
-void init_custom_theme(Theme theme);
+// @param theme        the custom theme
+// @param showSeconds  specifies if the time shows seconds (to properly select font size)
+void init_custom_theme(Theme theme, bool showSeconds);

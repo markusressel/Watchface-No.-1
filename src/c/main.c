@@ -136,9 +136,9 @@ static void init() {
     custom_theme.HeartIconColor = s_settings->HeartIconColor;
     custom_theme.HeartrateTextColor = s_settings->HeartrateTextColor;
     
-    init_custom_theme(custom_theme);
+    init_custom_theme(custom_theme, s_settings->ShowSeconds);
   } else {
-    init_theme(theme);
+    init_theme(theme, s_settings->ShowSeconds);
   }
   
   // Create main Window element and assign to pointer
