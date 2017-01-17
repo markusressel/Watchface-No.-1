@@ -41,6 +41,18 @@
         "resources": {
             "media": [
                 {
+                    "file": "images/sw-20.png",
+                    "name": "WEATHER_ICON_WIND",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
+                    "file": "images/sw-16.png",
+                    "name": "WEATHER_ICON_DRIZZLE",
+                    "targetPlatforms": null,
+                    "type": "bitmap"
+                },
+                {
                     "file": "images/sw-30.png",
                     "name": "WEATHER_ICON_TORNADO",
                     "targetPlatforms": null,

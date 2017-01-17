@@ -42,6 +42,8 @@ static int get_weather_icon_resource_id(char* conditions) {
     return RESOURCE_ID_WEATHER_ICON_SUN;
   } else if (strstr(conditions, "Clouds")) {
     return RESOURCE_ID_WEATHER_ICON_CLOUDS;
+  } else if (strstr(conditions, "Drizzle")) {
+    return RESOURCE_ID_WEATHER_ICON_DRIZZLE;
   } else if (strstr(conditions, "Rain")) {
     return RESOURCE_ID_WEATHER_ICON_RAIN;
   } else if (strstr(conditions, "Thunderstorm")) {
@@ -52,6 +54,8 @@ static int get_weather_icon_resource_id(char* conditions) {
     return RESOURCE_ID_WEATHER_ICON_FOG;
   } else if (strstr(conditions, "Extreme")) {
     return RESOURCE_ID_WEATHER_ICON_TORNADO;
+  } else if (strstr(conditions, "Additional")) {
+    return RESOURCE_ID_WEATHER_ICON_WIND;
   } else {
     return 0;
   }
