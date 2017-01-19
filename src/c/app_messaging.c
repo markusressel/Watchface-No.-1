@@ -121,7 +121,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   if(temp_tuple && condition_tuple) {
     WeatherData *weatherData = weather_get_data();
     
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "temp changed: old: %d new: %d",(int)  weatherData->CurrentTemperature, (int)temp_tuple->value->int32);
+    //APP_LOG(APP_LOG_LEVEL_DEBUG, "temp changed: old: %d new: %d",(int)  weatherData->CurrentTemperature, (int)temp_tuple->value->int32);
     
     weatherData->CurrentTemperature = (int)temp_tuple->value->int32;
     strcpy(weatherData->CurrentConditions, condition_tuple->value->cstring);
@@ -145,7 +145,7 @@ static void outbox_failed_callback(DictionaryIterator *iterator, AppMessageResul
 }
 
 static void outbox_sent_callback(DictionaryIterator *iterator, void *context) {
-  APP_LOG(APP_LOG_LEVEL_INFO, "Outbox send success!");
+  //APP_LOG(APP_LOG_LEVEL_INFO, "Outbox send success!");
 }
 
 void initialize_app_messaging() {

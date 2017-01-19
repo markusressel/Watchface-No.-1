@@ -160,11 +160,28 @@ static void initialize_heart_animation() {
   animation_set_play_count(s_sequence, s_heartbeat_animation_repeat_count);
 }
 
-// update heart animation properties if BPM changed
-static void update_heart_animation() {
+// update heart animation properties and play animation
+static void update_and_play_heart_animation() {
+  // calculate animation speed based on new heartrate
+  s_heartbeat_animation_delay = (int) 
+    ((float) 60 / 
+     s_heartrate_bpm * 1000 - 
+     (s_heartbeat_animation_in_duration + s_heartbeat_animation_out_duration));
+
+  //APP_LOG(APP_LOG_LEVEL_DEBUG, 
+  //        "animation speed is now %d + %d + %d",
+  //s_heartbeat_animation_out_duration, 
+  //s_heartbeat_animation_in_duration,
+  //s_heartbeat_animation_delay);
+
+  // set to 0 if smaller than 0 (BPM > 160) with current values (375ms heartbeat animation)
+  if (s_heartbeat_animation_delay < 0) {
+    s_heartbeat_animation_delay = 0;
+  }
+  
   initialize_heart_animation();
   
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "rescheduling heart animation");
+  //APP_LOG(APP_LOG_LEVEL_DEBUG, "rescheduling heart animation");
   animation_schedule(s_sequence);
 }
 
@@ -174,36 +191,12 @@ void update_heartrate() {
   // s_heartrate_bpm = 90;
   
   if (s_current_heartrate != s_heartrate_bpm) {
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "heartrate changed: new %d, old: %d", s_heartrate_bpm, s_current_heartrate);
+   // APP_LOG(APP_LOG_LEVEL_DEBUG, "heartrate changed: new %d, old: %d", s_heartrate_bpm, s_current_heartrate);
     s_current_heartrate = s_heartrate_bpm;
-    
-    if (s_heartrate_bpm != 0) {
-      // calculate animation speed based on new heartrate
-      s_heartbeat_animation_delay = (int) 
-        ((float) 60 / 
-         s_heartrate_bpm * 1000 - 
-         (s_heartbeat_animation_in_duration + s_heartbeat_animation_out_duration));
-      
-      APP_LOG(APP_LOG_LEVEL_DEBUG, 
-              "animation speed is now %d + %d + %d", 
-              s_heartbeat_animation_out_duration, 
-              s_heartbeat_animation_in_duration,
-              s_heartbeat_animation_delay);
-  
-      // set to 0 if smaller than 0 (BPM > 160) with current values (375ms heartbeat animation)
-      if (s_heartbeat_animation_delay < 0) {
-        s_heartbeat_animation_delay = 0;
-      }
-      
-      update_heart_animation();
-    } else {
-      // set speed to default value but DONT start animation
-      s_heartbeat_animation_delay = 625; // 60 BPM
-    }
   } else {
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "ignoring already visble heartrate update");
+    //APP_LOG(APP_LOG_LEVEL_DEBUG, "ignoring already visble heartrate update");
+    return;
   }
-  
   
   // Write the current heartrate into a buffer
   static char s_buffer[8];
@@ -230,10 +223,7 @@ void create_heartrate_layer(Window *window) {
   
   // load heart icon
   s_heart_icon = gbitmap_create_with_resource(RESOURCE_ID_HEARTRATE_ICON_HEART_FILLED);
-//  #ifdef PBL_COLOR
   replace_gbitmap_color(GColorBlack, theme_get_theme()->HeartIconColor, s_heart_icon, NULL);
-  //replace_gbitmap_color(GColorBlack, GColorRed, s_heart_icon, NULL);
-//  #endif
   
   s_heart_icon_layer = layer_create(icon_bounds);
   layer_set_update_proc(s_heart_icon_layer, heart_icon_update_callback);
@@ -260,6 +250,9 @@ void create_heartrate_layer(Window *window) {
   // update value before rendering so it is shown right from the beginning
   s_heartrate_bpm = health_service_peek_current_value(HealthMetricHeartRateBPM);
   update_heartrate();
+  if (s_heartrate_bpm != 0) {
+      update_and_play_heart_animation();
+  }
   
   // Add it as a child layer to the Window's root layer
   layer_add_child(window_layer, s_heart_icon_layer);

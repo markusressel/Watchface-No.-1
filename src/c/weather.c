@@ -78,7 +78,7 @@ static void request_weather_update() {
   // Add an item to ask for weather data
   dict_write_int(out_iter, MESSAGE_KEY_RequestData, &value, sizeof(int), true);
   
-  APP_LOG(APP_LOG_LEVEL_ERROR, "Sending RequestUpdate message for weather...");
+  // APP_LOG(APP_LOG_LEVEL_ERROR, "Sending RequestUpdate message for weather...");
   
   // Send this message
   result = app_message_outbox_send();
@@ -90,7 +90,7 @@ static void request_weather_update() {
 }
 
 static void on_scheduled_update_triggered() {
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "scheduled weather update triggered!");
+  // APP_LOG(APP_LOG_LEVEL_DEBUG, "scheduled weather update triggered!");
   
   if (s_update_timer) {
     // cancel weather update timer
@@ -105,7 +105,7 @@ static void on_scheduled_update_triggered() {
 }
 
 void update_weather(){
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "updating weather with new data");
+  // APP_LOG(APP_LOG_LEVEL_DEBUG, "updating weather with new data");
   
   // persist current data for fast access when opening the watchface
   save_current_weather_data();
@@ -152,7 +152,7 @@ void create_weather_layer(Window *window){
   
   // set bounds and offset for text layer
   int width = 60;
-  int height = 36;
+  int height = 40;
   int offsetX = icon_bounds.size.w + 5 + 5;
   int offsetY = bounds.size.h - height - 5;
   

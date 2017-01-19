@@ -1,8 +1,6 @@
 #include "gbitmap_color_palette_manipulator.h"
 
-//#ifdef PBL_COLOR
-
-#define SHOW_APP_LOGS
+// #define SHOW_APP_LOGS
 
 char* get_gbitmapformat_text(GBitmapFormat format){
 	switch (format) {
@@ -14,7 +12,6 @@ char* get_gbitmapformat_text(GBitmapFormat format){
 
 		default: return "UNKNOWN FORMAT";
 	}
-
 }
 
 int get_num_palette_colors(GBitmap *b){
@@ -30,11 +27,9 @@ int get_num_palette_colors(GBitmap *b){
 
 		default: return 0;
 	}
-
 }
 
 void replace_gbitmap_color(GColor color_to_replace, GColor replace_with_color, GBitmap *im, BitmapLayer *bml){
-
 	//First determine what the number of colors in the palette
 	int num_palette_items = get_num_palette_colors(im);
 
@@ -52,7 +47,6 @@ void replace_gbitmap_color(GColor color_to_replace, GColor replace_with_color, G
 	#endif 
 
 	for(int i = 0; i < num_palette_items; i++){
-
 		#ifdef SHOW_APP_LOGS
 		APP_LOG(APP_LOG_LEVEL_DEBUG, "Palette[%d] = %s (alpha:%d)", i, get_gcolor_text(current_palette[i]),(current_palette[i].argb >>6));
 		#endif
@@ -65,7 +59,6 @@ void replace_gbitmap_color(GColor color_to_replace, GColor replace_with_color, G
 			#endif
 			
 		}
-
 	}
 
 	#ifdef SHOW_APP_LOGS
@@ -76,11 +69,9 @@ void replace_gbitmap_color(GColor color_to_replace, GColor replace_with_color, G
 	if(bml != NULL){
 		layer_mark_dirty(bitmap_layer_get_layer(bml));
 	}
-
 }
 
 void gbitmap_fill_all_except(GColor color_to_not_change, GColor fill_color, bool fill_gcolorclear, GBitmap *im, BitmapLayer *bml){
-
 	//First determine what the number of colors in the palette
 	int num_palette_items = get_num_palette_colors(im);
 
@@ -110,7 +101,6 @@ void gbitmap_fill_all_except(GColor color_to_not_change, GColor fill_color, bool
 				#endif
 			}
 		}
-
 	}
 	#ifdef SHOW_APP_LOGS
 	APP_LOG(APP_LOG_LEVEL_DEBUG, "--Color Fill End--");
@@ -120,11 +110,9 @@ void gbitmap_fill_all_except(GColor color_to_not_change, GColor fill_color, bool
 	if(bml != NULL){
 		layer_mark_dirty(bitmap_layer_get_layer(bml));
 	}
-
 }
 
 bool gbitmap_color_palette_contains_color(GColor m_color, GBitmap *im){
-
 	int num_palette_items = get_num_palette_colors(im);
 	GColor *current_palette = gbitmap_get_palette(im);
 	for(int i = 0; i < num_palette_items; i++){
@@ -136,7 +124,6 @@ bool gbitmap_color_palette_contains_color(GColor m_color, GBitmap *im){
 
 			return true;
 		}
-
 	}
 
 	#ifdef SHOW_APP_LOGS
@@ -144,7 +131,6 @@ bool gbitmap_color_palette_contains_color(GColor m_color, GBitmap *im){
 	#endif
 
 	return false;
-
 }
 
 void spit_gbitmap_color_palette(GBitmap *im){
@@ -189,6 +175,4 @@ const char* get_gcolor_text(GColor m_color){
 	if(gcolor_equal(m_color, GColorClear))
 		return "GColorClear";
 	return GColorsNames[m_color.argb & 0x3F];
-
 }
-// #endif	

@@ -61,7 +61,6 @@ void create_phone_connection_indicator_layer(Window *window) {
   Layer *window_layer = window_get_root_layer(window);
   // GRect bounds = layer_get_bounds(window_layer);
   
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "retreiving settings");
   s_settings = clay_get_settings();
   
   // Create battery meter Layer
@@ -77,11 +76,9 @@ void create_phone_connection_indicator_layer(Window *window) {
   replace_gbitmap_color(GColorBlack, theme_get_theme()->ConnectionIconColor, s_connection_icon, NULL);
   s_connection_icon = scaleBitmap(s_connection_icon, 40, 40);
   
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "updating indicator");
   // force update
   update_phone_connection_indicator();
   
-  APP_LOG(APP_LOG_LEVEL_DEBUG, "adding to parent");
   // Add to Window
   layer_add_child(window_get_root_layer(window), s_phone_connection_indicator_layer);
 }

@@ -9,28 +9,28 @@ static void health_handler(HealthEventType event, void *context) {
   // Which type of event occurred?
   switch(event) {
     case HealthEventSignificantUpdate:
-      APP_LOG(APP_LOG_LEVEL_INFO, 
-              "New HealthService HealthEventSignificantUpdate event");
+      //APP_LOG(APP_LOG_LEVEL_INFO, 
+       //       "New HealthService HealthEventSignificantUpdate event");
       s_heartrate_bpm = health_service_peek_current_value(HealthMetricHeartRateBPM);
       update_heartrate();
       break;
     case HealthEventMovementUpdate:
-      APP_LOG(APP_LOG_LEVEL_INFO, 
-              "New HealthService HealthEventMovementUpdate event");
+      //APP_LOG(APP_LOG_LEVEL_INFO, 
+      //        "New HealthService HealthEventMovementUpdate event");
       break;
     case HealthEventSleepUpdate:
-      APP_LOG(APP_LOG_LEVEL_INFO, 
-              "New HealthService HealthEventSleepUpdate event");
+      //APP_LOG(APP_LOG_LEVEL_INFO, 
+       //       "New HealthService HealthEventSleepUpdate event");
       break;
     case HealthEventHeartRateUpdate:
-      APP_LOG(APP_LOG_LEVEL_INFO,
-              "New HealthService HealthEventHeartRateUpdate event");
+      //APP_LOG(APP_LOG_LEVEL_INFO,
+      //        "New HealthService HealthEventHeartRateUpdate event");
       s_heartrate_bpm = health_service_peek_current_value(HealthMetricHeartRateBPM);
       update_heartrate();
       break;
     case HealthEventMetricAlert:
-    APP_LOG(APP_LOG_LEVEL_INFO,
-              "New HealthService HealthEventMetricAlert event");
+      //APP_LOG(APP_LOG_LEVEL_INFO,
+       //       "New HealthService HealthEventMetricAlert event");
       break;
     default:
       APP_LOG(APP_LOG_LEVEL_INFO,

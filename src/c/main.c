@@ -79,17 +79,6 @@ static void init() {
   APP_LOG(APP_LOG_LEVEL_DEBUG, "mapping theme value to enum");
   // map clay configuration value to ThemeEnum
   
-  if (!s_settings) {
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "Settings are NULL!");
-  } else {
-    APP_LOG(APP_LOG_LEVEL_DEBUG, "Settings are valid :)");
-    if (!s_settings->ThemeValue) {
-      APP_LOG(APP_LOG_LEVEL_DEBUG, "ThemeValue is NULL!");
-    } else {
-      APP_LOG(APP_LOG_LEVEL_DEBUG, "ThemeValue is valid :)");
-    }
-  }
-  
   if (!s_settings->ThemeValue) {
     strcpy(s_settings->ThemeValue, "DARK");
   }
